@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>pop_growth_rate_logistic</name>
+        <uuid>760a18f7-fce9-4fb5-b308-d92d41b293d2</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Years" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>0</start>
+        <stop>150</stop>
+        <dt>0.25</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1423" height="802" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="Population">
+            <eqn>10</eqn>
+            <inflow>Delta_Pop</inflow>
+            <non_negative />
+            <display x="272" y="103" color="blue" />
+        </stock>
+        <flow name="Delta_Pop">
+            <eqn>Growth_Rate*Population*(1-(Population/Carry_Cap))+migration_inout</eqn>
+            <display x="169" y="101" color="blue">
+                <pts>
+                    <pt x="89" y="101" />
+                    <pt x="250" y="101" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Carry_Cap">
+            <eqn>100</eqn>
+            <display x="215" y="135" color="blue" />
+        </aux>
+        <aux name="Growth_Rate">
+            <eqn>0.1</eqn>
+            <display x="196" y="188" color="blue" />
+        </aux>
+        <aux name="migration\ninout">
+            <eqn>RANDOM(-10, 10)</eqn>
+            <display x="140" y="30" color="blue" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="2" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT">
+            <connector x="211" y="143" uid="0">
+                <from>Carry_Cap</from>
+                <to>Delta_Pop</to>
+            </connector>
+            <connector x="189" y="194" uid="1">
+                <from>Growth_Rate</from>
+                <to>Delta_Pop</to>
+            </connector>
+            <connector x="250" y="86" uid="2">
+                <from>Population</from>
+                <to>Delta_Pop</to>
+            </connector>
+            <connector x="147" y="24" uid="3">
+                <from>migration_inout</from>
+                <to>Delta_Pop</to>
+            </connector>
+            <stacked_container x="27" y="289" height="432" width="750" uid="4">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T11:34:04Z" time_precision="2" from="0" to="150">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Population" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <entity name="Delta_Pop" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="44" y="300" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="4" />
+            <text_box x="332" y="24" uid="5" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="260" height="58">Logistic growth rate model&#x0D;- w/ carry cap&#x0D;- random migration</text_box>
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0.1</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
