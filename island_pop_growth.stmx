@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>island_pop_growth</name>
+        <uuid>666e574f-6b30-460c-991a-7ba4c33ebc44</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Years" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>0</start>
+        <stop>100</stop>
+        <dt>1</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1584" height="802" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <flow name="birthing">
+            <eqn>Birth_rate*Pop</eqn>
+            <non_negative />
+            <display x="231" y="93" color="blue">
+                <pts>
+                    <pt x="117" y="93" />
+                    <pt x="345" y="93" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="Pop">
+            <doc>people on the island</doc>
+            <eqn>10</eqn>
+            <inflow>birthing</inflow>
+            <non_negative />
+            <display x="367" y="76" color="blue" label_angle="72" />
+        </stock>
+        <aux name="Birth_rate">
+            <doc>number of new poeple per person on the island per year</doc>
+            <eqn>0.03</eqn>
+            <display x="242" y="157" color="blue" />
+        </aux>
+        <flow name="birthing_1">
+            <eqn>Birth_rate_1*Pop_1</eqn>
+            <non_negative />
+            <display x="209" y="379" color="blue">
+                <pts>
+                    <pt x="95" y="379" />
+                    <pt x="323" y="379" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="Pop_1">
+            <doc>people on the island</doc>
+            <eqn>10</eqn>
+            <inflow>birthing_1</inflow>
+            <non_negative />
+            <display x="345" y="362" color="blue" label_angle="72" />
+        </stock>
+        <aux name="Birth_rate_1">
+            <doc>number of new poeple per person on the island per year</doc>
+            <eqn>Density_1*0.03</eqn>
+            <gf>
+                <xscale min="0" max="1" />
+                <yscale min="0" max="1" />
+                <ypts>0.96599999999999997,0.81599999999999995,0.63700000000000001,0.496,0.36799999999999999,0.30299999999999999,0.072999999999999995,0.068000000000000005,0.042999999999999997,0.047,0</ypts>
+            </gf>
+            <display x="220" y="443" color="blue" />
+        </aux>
+        <aux name="Density_1">
+            <eqn>Pop_1/Area_1</eqn>
+            <display x="261" y="509" color="blue" />
+        </aux>
+        <aux name="Area_1">
+            <eqn>1</eqn>
+            <display x="366" y="485" color="blue" />
+        </aux>
+        <flow name="birthing_2">
+            <eqn>Birth_rate_2*DELAY(Pop_2, 0.01)</eqn>
+            <non_negative />
+            <display x="200" y="689" color="blue">
+                <pts>
+                    <pt x="86" y="689" />
+                    <pt x="314" y="689" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="Pop_2">
+            <doc>people on the island</doc>
+            <eqn>10</eqn>
+            <inflow>birthing_2</inflow>
+            <non_negative />
+            <display x="336" y="672" color="blue" label_angle="72" />
+        </stock>
+        <aux name="Birth_rate_2">
+            <doc>number of new poeple per person on the island per year</doc>
+            <eqn>0.03</eqn>
+            <display x="211" y="753" color="blue" />
+        </aux>
+        <flow name="birthing_3">
+            <eqn>Birth_rate_3*Pop_3</eqn>
+            <non_negative />
+            <display x="204" y="970" color="blue">
+                <pts>
+                    <pt x="96" y="970" />
+                    <pt x="313" y="970" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="Pop_3">
+            <doc>people on the island</doc>
+            <eqn>10</eqn>
+            <inflow>birthing_3</inflow>
+            <non_negative />
+            <display x="335" y="953" color="blue" label_angle="72" />
+        </stock>
+        <aux name="Birth_rate_3">
+            <doc>number of new poeple per person on the island per year</doc>
+            <eqn>RANDOM(0.01, 0.03)</eqn>
+            <display x="221" y="1034" color="blue" />
+        </aux>
+        <flow name="birthing_4">
+            <eqn>Birth_rate_4*DELAY(Pop_4, 0.1)</eqn>
+            <non_negative />
+            <display x="212" y="1449" color="blue">
+                <pts>
+                    <pt x="98" y="1449" />
+                    <pt x="326" y="1449" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="Pop_4">
+            <doc>people on the island</doc>
+            <eqn>10</eqn>
+            <inflow>birthing_4</inflow>
+            <non_negative />
+            <display x="348" y="1432" color="blue" label_angle="72" />
+        </stock>
+        <aux name="Birth_rate_4">
+            <doc>number of new poeple per person on the island per year</doc>
+            <eqn>Density_2*RANDOM(0.01, 0.03)</eqn>
+            <gf>
+                <xscale min="0" max="1" />
+                <yscale min="0" max="1" />
+                <ypts>0.96599999999999997,0.81599999999999995,0.63700000000000001,0.496,0.36799999999999999,0.30299999999999999,0.072999999999999995,0.068000000000000005,0.042999999999999997,0.047,0</ypts>
+            </gf>
+            <display x="223" y="1513" color="blue" />
+        </aux>
+        <aux name="Density_2">
+            <eqn>Pop_4/Area_2</eqn>
+            <display x="264" y="1579" color="blue" />
+        </aux>
+        <aux name="Area_2">
+            <eqn>1</eqn>
+            <display x="369" y="1555" color="blue" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="3" page_rows="3" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT" scroll_x="8">
+            <connector x="234" y="161" uid="0">
+                <from>Birth_rate</from>
+                <to>birthing</to>
+            </connector>
+            <connector x="345" y="60" uid="1">
+                <from>Pop</from>
+                <to>birthing</to>
+            </connector>
+            <connector x="212" y="447" uid="2">
+                <from>Birth_rate_1</from>
+                <to>birthing_1</to>
+            </connector>
+            <connector x="323" y="346" uid="3">
+                <from>Pop_1</from>
+                <to>birthing_1</to>
+            </connector>
+            <connector x="359" y="480" uid="4">
+                <from>Area_1</from>
+                <to>Density_1</to>
+            </connector>
+            <connector x="367" y="366" uid="5">
+                <from>Pop_1</from>
+                <to>Density_1</to>
+            </connector>
+            <connector x="255" y="503" uid="6">
+                <from>Density_1</from>
+                <to>Birth_rate_1</to>
+            </connector>
+            <connector x="203" y="758" uid="7">
+                <from>Birth_rate_2</from>
+                <to>birthing_2</to>
+            </connector>
+            <connector x="314" y="656" uid="8">
+                <from>Pop_2</from>
+                <to>birthing_2</to>
+            </connector>
+            <connector x="213" y="1037" uid="9">
+                <from>Birth_rate_3</from>
+                <to>birthing_3</to>
+            </connector>
+            <connector x="313" y="937" uid="10">
+                <from>Pop_3</from>
+                <to>birthing_3</to>
+            </connector>
+            <connector x="215" y="1517" uid="11">
+                <from>Birth_rate_4</from>
+                <to>birthing_4</to>
+            </connector>
+            <connector x="326" y="1416" uid="12">
+                <from>Pop_4</from>
+                <to>birthing_4</to>
+            </connector>
+            <connector x="362" y="1550" uid="13">
+                <from>Area_2</from>
+                <to>Density_2</to>
+            </connector>
+            <connector x="371" y="1437" uid="14">
+                <from>Pop_4</from>
+                <to>Density_2</to>
+            </connector>
+            <connector x="258" y="1573" uid="15">
+                <from>Density_2</from>
+                <to>Birth_rate_4</to>
+            </connector>
+            <stacked_container x="428" y="30" height="262" width="474" uid="16">
+                <graph type="time_series" title="Island Pop - Base line model" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T00:20:17Z" time_precision="2" from="0" to="100">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Pop" />
+                    </plot>
+                </graph>
+                <graph type="time_series" title="Pop Density dep growth" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T00:20:17Z" time_precision="2" from="0" to="100">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Pop" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="378" y="96" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="16" />
+            <stacked_container x="445" y="334" height="256" width="464" uid="17">
+                <graph type="time_series" title="Island Pop- Density Dependent" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T00:20:17Z" time_precision="2" from="0" to="100">
+                    <plot index="0" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <entity name="Pop_1" />
+                    </plot>
+                </graph>
+                <graph type="time_series" title="Pop Density dep growth" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T00:20:17Z" time_precision="2" from="0" to="100">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Pop" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="356" y="382" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="17" />
+            <stacked_container x="458" y="649" height="269" width="485" uid="18">
+                <graph type="time_series" title="Island Pop- Delayed" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T00:20:17Z" time_precision="2" from="0" to="100">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Pop_2" />
+                    </plot>
+                </graph>
+                <graph type="time_series" title="Pop Density dep growth" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T00:20:17Z" time_precision="2" from="0" to="100">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Pop" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="347" y="692" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="18" />
+            <stacked_container x="458" y="956" height="282" width="492" uid="19">
+                <graph type="time_series" title="Island Pop- stochastic" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T00:20:17Z" time_precision="2" from="0" to="100">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Pop_3" />
+                    </plot>
+                </graph>
+                <graph type="time_series" title="Pop Density dep growth" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T00:20:17Z" time_precision="2" from="0" to="100">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Pop" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="357" y="973" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="19" />
+            <stacked_container x="479" y="1315" height="256" width="464" uid="20">
+                <graph type="time_series" title="Island Pop- Density Dependent w/ stochasticity and delay" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T00:20:17Z" time_precision="2" from="0" to="100">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Pop_4" />
+                    </plot>
+                </graph>
+                <graph type="time_series" title="Pop Density dep growth" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T00:20:17Z" time_precision="2" from="0" to="100">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Pop" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="359" y="1452" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="20" />
+            <text_box x="102" y="23" uid="21" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="160" height="28">Model 1 - base line model</text_box>
+            <text_box x="77" y="270" uid="22" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="226" height="46">Model 2 - base line model w/ denisty depenedent birthrate</text_box>
+            <text_box x="956" y="39" uid="23" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="420" height="616">MATEUSZ GROBELNY  IB491 10.17.16&#x0D;HOMEWORK#: HW1&#x0D;&#x0D;GIVEN:&#x0D; -  We are given the size of the an island population (10 people), the growth rate(0.03 people per year) and size of island (1 sq mile)&#x0D;&#x0D;QUESTIONS: &#x0D;- How does the population size change over the next 10 years?&#x0D;- How does the population size change over 10 years, when the birth rate is density dependent?&#x0D;- How does the population size change over 10 years, with delays in birthing calculation?&#x0D;- How does the population size change over 10 years, when the birth rate is can be a random value between (0.01 and 0.03)?&#x0D;&#x0D;&#x0D;SOLUTIONS:&#x0D;-  Population size is controled via the birthing module, which takes in the birth rate and population size then multiplies the two values together - the birthing rate is not limited by the enviorment.&#x0D;&#x0D;FUTHER QUESTIONS:&#x0D;- How does a the addition of a death rate variable effect the population size?&#x0D;-  How would modeling, limits on resources impact the population?&#x0D;- How does one optimize input parameters to find/ produce a population in equlibrium with its enviroment?&#x0D;&#x0D;ANALOGY:&#x0D;- This model is analogus to:&#x0D;Accumulation of nutrients/toxins within a habitat&#x0D;(Density Dep) -&gt; Saturation of a solution / carrying capacity &#x0D;&#x0D;&#x0D;</text_box>
+            <text_box x="50" y="603" uid="24" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="189" height="45">Model 3 - base line model w/ delay</text_box>
+            <text_box x="39" y="875" uid="25" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="198" height="51">Model 4 - base line model w/ stochasticity</text_box>
+            <text_box x="80" y="1340" uid="26" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="278" height="55">Model 5 - base line model w/ denisty depenedent birthrate, delay and stochasticity</text_box>
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0.1</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
