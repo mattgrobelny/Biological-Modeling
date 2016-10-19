@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>pop_growth_rate_model2_death_n_birth</name>
+        <uuid>93aef727-ff04-4c0c-9fce-ceb9929d82aa</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Months" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>1</start>
+        <stop>2500</stop>
+        <dt>0.25</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1423" height="802" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="Pop">
+            <doc>2</doc>
+            <eqn>2</eqn>
+            <inflow>Birthing</inflow>
+            <outflow>Dying</outflow>
+            <non_negative />
+            <display x="314" y="126" color="blue" />
+        </stock>
+        <flow name="Birthing">
+            <eqn>Pop*0.07</eqn>
+            <non_negative />
+            <display x="189" y="131" color="blue">
+                <pts>
+                    <pt x="87" y="131" />
+                    <pt x="292" y="131" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Death_rate">
+            <eqn>IF( Death_Rate_Distribution &gt;= 0.01) AND( Death_Rate_Distribution&lt;= 1) THEN( Death_Rate_Distribution) ELSE (0.01)</eqn>
+            <units />
+            <display x="487" y="219" color="blue" />
+        </aux>
+        <flow name="Dying">
+            <eqn>Death_rate*Pop</eqn>
+            <non_negative />
+            <display x="408" y="130" color="blue">
+                <pts>
+                    <pt x="336" y="130" />
+                    <pt x="481" y="130" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Nominal_Death_rate">
+            <eqn>0.04</eqn>
+            <display x="503" y="348" color="blue" />
+        </aux>
+        <aux name="Death_Rate_Distribution">
+            <eqn>NORMAL(Nominal_Death_rate, 0.005*Pop)</eqn>
+            <display x="391" y="237" color="blue" />
+        </aux>
+        <stock name="Sum_pop">
+            <eqn>0</eqn>
+            <inflow>Flow_1</inflow>
+            <non_negative />
+            <display x="132" y="239" color="blue" />
+        </stock>
+        <flow name="Flow_1">
+            <eqn>Pop</eqn>
+            <non_negative />
+            <display x="201" y="248" color="blue">
+                <pts>
+                    <pt x="248" y="248" />
+                    <pt x="154" y="248" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Avg_pop">
+            <eqn>Sum_pop/(TIME)</eqn>
+            <display x="88" y="300" color="blue" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="2" page_rows="2" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT">
+            <connector x="308" y="109" uid="0">
+                <from>Pop</from>
+                <to>Birthing</to>
+            </connector>
+            <connector x="336" y="120" uid="1">
+                <from>Pop</from>
+                <to>Dying</to>
+            </connector>
+            <connector x="478" y="218" uid="2">
+                <from>Death_rate</from>
+                <to>Dying</to>
+            </connector>
+            <connector x="318" y="143" uid="3">
+                <from>Pop</from>
+                <to>Death_Rate_Distribution</to>
+            </connector>
+            <connector x="494" y="348" uid="4">
+                <from>Nominal_Death_rate</from>
+                <to>Death_Rate_Distribution</to>
+            </connector>
+            <connector x="399" y="241" uid="5">
+                <from>Death_Rate_Distribution</from>
+                <to>Death_rate</to>
+            </connector>
+            <connector x="304" y="140" uid="6">
+                <from>Pop</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="110" y="239" uid="7">
+                <from>Sum_pop</from>
+                <to>Avg_pop</to>
+            </connector>
+            <stacked_container x="41" y="813" height="405" width="706" uid="8">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T12:19:00Z" time_precision="2" from="1" to="2500">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Birthing" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <entity name="Dying" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <entity name="Pop" />
+                    </plot>
+                    <plot index="3" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <entity name="Avg_pop" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="66" y="364" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="8" />
+            <stacked_container x="340" y="410" height="334" width="591" uid="9">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T12:21:06Z" time_precision="2" from="1" to="2500">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <scale min="0" max="30.51" />
+                        <entity name="Pop" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="30.51" />
+                        <entity name="Avg_pop" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="625" y="455" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="9" />
+            <text_box x="556" y="58" uid="10" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="280" height="238">Population model 2:&#x0D;-Normal Distribution of the death rate&#x0D;-Death rate limited to range:  1 to 0.1&#x0D;- Calc avg pop size &#x0D;</text_box>
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
