@@ -17,8 +17,14 @@
         <dt>0.25</dt>
     </sim_specs>
     <model_units />
+    <isee:sensi_specs run="true" runs="5">
+        <method>multivariate</method>
+        <isee:variable max="100" min="10" type="incremental" name="Pop_1">
+            <num_samples>4</num_samples>
+        </isee:variable>
+    </isee:sensi_specs>
     <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
-        <isee:window width="1423" height="802" />
+        <isee:window width="1600" height="818" />
         <isee:security />
         <isee:print_setup width="570" height="750" />
     </isee:prefs>
@@ -44,7 +50,6 @@
         </flow>
         <aux name="Death_rate">
             <eqn>IF( Death_Rate_Distribution &gt;= 0.01) AND( Death_Rate_Distribution&lt;= 1) THEN( Death_Rate_Distribution) ELSE (0.01)</eqn>
-            <units />
             <display x="487" y="219" color="blue" />
         </aux>
         <flow name="Dying">
@@ -85,7 +90,67 @@
             <eqn>Sum_pop/(TIME)</eqn>
             <display x="88" y="300" color="blue" />
         </aux>
-        <display page_width="570" page_height="750" page_cols="2" page_rows="2" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT">
+        <stock name="Pop_1">
+            <doc>2</doc>
+            <eqn>2</eqn>
+            <inflow>Birthing_1</inflow>
+            <outflow>Dying_1</outflow>
+            <non_negative />
+            <display x="316" y="1025" color="blue" />
+        </stock>
+        <flow name="Birthing_1">
+            <eqn>Pop_1*0.07</eqn>
+            <non_negative />
+            <display x="191" y="1030" color="blue">
+                <pts>
+                    <pt x="89" y="1030" />
+                    <pt x="294" y="1030" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Death_rate_1">
+            <eqn>IF( Death_Rate_Distribution_1 &gt;= 0.01) AND( Death_Rate_Distribution_1&lt;= 1) THEN( Death_Rate_Distribution_1) ELSE (0.01)</eqn>
+            <display x="489" y="1118" color="blue" />
+        </aux>
+        <flow name="Dying_1">
+            <eqn>Death_rate_1*Pop_1</eqn>
+            <non_negative />
+            <display x="410" y="1029" color="blue">
+                <pts>
+                    <pt x="338" y="1029" />
+                    <pt x="483" y="1029" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Nominal_Death_rate_1">
+            <eqn>0.04</eqn>
+            <display x="505" y="1247" color="blue" />
+        </aux>
+        <aux name="Death_Rate_Distribution_1">
+            <eqn>NORMAL(Nominal_Death_rate_1, 0.005*Pop_1)</eqn>
+            <display x="393" y="1136" color="blue" />
+        </aux>
+        <stock name="Sum_pop_1">
+            <eqn>0</eqn>
+            <inflow>Flow_2</inflow>
+            <non_negative />
+            <display x="134" y="1138" color="blue" />
+        </stock>
+        <flow name="Flow_2">
+            <eqn>Pop_1</eqn>
+            <non_negative />
+            <display x="203" y="1147" color="blue">
+                <pts>
+                    <pt x="250" y="1147" />
+                    <pt x="156" y="1147" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Avg_pop_1">
+            <eqn>Sum_pop_1/(TIME)</eqn>
+            <display x="90" y="1199" color="blue" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="3" page_rows="3" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT" scroll_y="144">
             <connector x="308" y="109" uid="0">
                 <from>Pop</from>
                 <to>Birthing</to>
@@ -94,11 +159,11 @@
                 <from>Pop</from>
                 <to>Dying</to>
             </connector>
-            <connector x="478" y="218" uid="2">
+            <connector x="477" y="218" uid="2">
                 <from>Death_rate</from>
                 <to>Dying</to>
             </connector>
-            <connector x="318" y="143" uid="3">
+            <connector x="318" y="142" uid="3">
                 <from>Pop</from>
                 <to>Death_Rate_Distribution</to>
             </connector>
@@ -106,11 +171,11 @@
                 <from>Nominal_Death_rate</from>
                 <to>Death_Rate_Distribution</to>
             </connector>
-            <connector x="399" y="241" uid="5">
+            <connector x="399" y="240" uid="5">
                 <from>Death_Rate_Distribution</from>
                 <to>Death_rate</to>
             </connector>
-            <connector x="304" y="140" uid="6">
+            <connector x="302" y="143" uid="6">
                 <from>Pop</from>
                 <to>Flow_1</to>
             </connector>
@@ -118,37 +183,75 @@
                 <from>Sum_pop</from>
                 <to>Avg_pop</to>
             </connector>
-            <stacked_container x="41" y="813" height="405" width="706" uid="8">
-                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T12:19:00Z" time_precision="2" from="1" to="2500">
-                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
-                        <entity name="Birthing" />
+            <connector x="310" y="1008" uid="8">
+                <from>Pop_1</from>
+                <to>Birthing_1</to>
+            </connector>
+            <connector x="338" y="1019" uid="9">
+                <from>Pop_1</from>
+                <to>Dying_1</to>
+            </connector>
+            <connector x="480" y="1118" uid="10">
+                <from>Death_rate_1</from>
+                <to>Dying_1</to>
+            </connector>
+            <connector x="320" y="1042" uid="11">
+                <from>Pop_1</from>
+                <to>Death_Rate_Distribution_1</to>
+            </connector>
+            <connector x="496" y="1247" uid="12">
+                <from>Nominal_Death_rate_1</from>
+                <to>Death_Rate_Distribution_1</to>
+            </connector>
+            <connector x="402" y="1139" uid="13">
+                <from>Death_Rate_Distribution_1</from>
+                <to>Death_rate_1</to>
+            </connector>
+            <connector x="304" y="1042" uid="14">
+                <from>Pop_1</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="112" y="1138" uid="15">
+                <from>Sum_pop_1</from>
+                <to>Avg_pop_1</to>
+            </connector>
+            <stacked_container x="45" y="456" height="406" width="706" uid="16">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-24T21:04:14Z" time_precision="2" from="1" to="2500">
+                    <plot index="0" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <entity name="Pop" />
                     </plot>
                     <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
-                        <entity name="Dying" />
+                        <entity name="Avg_pop" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="66" y="364" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="16" />
+            <stacked_container x="583" y="925" height="378" width="661" uid="17">
+                <graph type="time_series" title="Comparing Population size over time with death rate from 0.1 to 1 " background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-24T21:04:14Z" comparative="true" time_precision="2" from="1" to="2500">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Pop_1" />
+                        <data name="Run 29" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <entity name="Pop_1" />
+                        <data name="Run 30" />
                     </plot>
                     <plot index="2" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
-                        <entity name="Pop" />
+                        <entity name="Pop_1" />
+                        <data name="Run 31" />
                     </plot>
                     <plot index="3" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
-                        <entity name="Avg_pop" />
+                        <entity name="Pop_1" />
+                        <data name="Run 32" />
+                    </plot>
+                    <plot index="4" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <entity name="Pop_1" />
+                        <data name="Run 33" />
                     </plot>
                 </graph>
             </stacked_container>
-            <pad_icon x="66" y="364" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="8" />
-            <stacked_container x="340" y="410" height="334" width="591" uid="9">
-                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-19T12:21:06Z" time_precision="2" from="1" to="2500">
-                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
-                        <scale min="0" max="30.51" />
-                        <entity name="Pop" />
-                    </plot>
-                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
-                        <scale min="0" max="30.51" />
-                        <entity name="Avg_pop" />
-                    </plot>
-                </graph>
-            </stacked_container>
-            <pad_icon x="625" y="455" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="9" />
-            <text_box x="556" y="58" uid="10" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="280" height="238">Population model 2:&#x0D;-Normal Distribution of the death rate&#x0D;-Death rate limited to range:  1 to 0.1&#x0D;- Calc avg pop size &#x0D;</text_box>
+            <pad_icon x="116" y="1305" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="17" />
+            <text_box x="787" y="15" uid="18" color="black" font-family="Arial" font-size="9" padding="5" border-style="solid" border-width="thin" width="522" height="650">Mateusz Grobelny IB491 10/24/16&#x0D;Population model 2:&#x0D;Given:&#x0D;- Population size&#x0D;-Normal Distribution of the death rate&#x0D;-Death rate limited to range:  1 to 0.1 &#x0D;&#x0D;Question: Given variation in the death rate at when will the population reach equilibrium if at all?&#x0D;&#x0D;Solution:&#x0D;Graph 1&#x0D;Two flow modules one adding to population size the other substracting from it. The birther module add population based ona  birthing rate and the dying module subtracts based on the death rate which is depenendent on a normal distribution with a standard devation of 0.005 times the population size.  The red line indicates the average pop size and tops out on average at  ~21 individuals after 1250 months.&#x0D;&#x0D;Graph 2&#x0D;Same set up as graph 1, except the model iterates over population size starting from 10 up to 100.&#x0D;&#x0D;Questions:&#x0D;Which variables most strongly effect population size? Which variable best predicts the size of a stable population?&#x0D;&#x0D;Analogies:&#x0D;- Where/when is the saturation point of a reaction or ecological system based on input and out put of resources?&#x0D;</text_box>
             <style font-family="Arial" font-size="9" />
         </display>
         <interface page_width="788" page_height="528">
