@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>10.26.16-Enyme_rxn</name>
+        <uuid>c72c61f8-99ab-412b-8427-674d7670e18d</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Months" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>0</start>
+        <stop>100</stop>
+        <dt>0.25</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1424" height="802" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="D">
+            <eqn>100</eqn>
+            <outflow>DelD</outflow>
+            <non_negative />
+            <display x="290" y="122" color="blue" />
+        </stock>
+        <stock name="I">
+            <eqn>10</eqn>
+            <inflow>DelE</inflow>
+            <non_negative />
+            <display x="151" y="195" color="blue" />
+        </stock>
+        <stock name="E">
+            <eqn>20</eqn>
+            <inflow>DelI</inflow>
+            <non_negative />
+            <display x="268" y="290" color="blue" label_angle="87" />
+        </stock>
+        <stock name="F">
+            <eqn>0</eqn>
+            <inflow>DelF</inflow>
+            <non_negative />
+            <display x="268" y="387" color="blue" />
+        </stock>
+        <flow name="DelF">
+            <eqn>k3*I</eqn>
+            <non_negative />
+            <display x="206" y="391" color="blue">
+                <pts>
+                    <pt x="166" y="391" />
+                    <pt x="246" y="391" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="DelD">
+            <eqn>D*E*k1-k2*I</eqn>
+            <display x="216" y="107" color="blue">
+                <pts>
+                    <pt x="268" y="107" />
+                    <pt x="164" y="107" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="DelE">
+            <eqn>k1*D*E-k2*I-k3*I</eqn>
+            <display x="228" y="201" color="blue">
+                <pts>
+                    <pt x="283" y="201" />
+                    <pt x="173" y="201" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="DelI">
+            <eqn>k1*D*E-k2*I-k3*I</eqn>
+            <non_negative />
+            <display x="200" y="294" color="blue">
+                <pts>
+                    <pt x="155" y="294" />
+                    <pt x="246" y="294" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="k1">
+            <eqn>0.01</eqn>
+            <display x="101" y="136" color="blue" />
+        </aux>
+        <aux name="k2">
+            <eqn>0.01</eqn>
+            <display x="355" y="188" color="blue" />
+        </aux>
+        <aux name="k3">
+            <eqn>0.5</eqn>
+            <display x="92" y="271" color="blue" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="2" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT">
+            <connector x="285" y="105" uid="0">
+                <from>D</from>
+                <to>DelD</to>
+            </connector>
+            <connector x="290" y="289" uid="1">
+                <from>E</from>
+                <to>DelD</to>
+            </connector>
+            <connector x="110" y="135" uid="2">
+                <from>k1</from>
+                <to>DelD</to>
+            </connector>
+            <connector x="345" y="187" uid="3">
+                <from>k2</from>
+                <to>DelD</to>
+            </connector>
+            <connector x="151" y="178" uid="4">
+                <from>I</from>
+                <to>DelD</to>
+            </connector>
+            <connector x="111" y="136" uid="5">
+                <from>k1</from>
+                <to>DelE</to>
+            </connector>
+            <connector x="279" y="139" uid="6">
+                <from>D</from>
+                <to>DelE</to>
+            </connector>
+            <connector x="290" y="286" uid="7">
+                <from>E</from>
+                <to>DelE</to>
+            </connector>
+            <connector x="347" y="184" uid="8">
+                <from>k2</from>
+                <to>DelE</to>
+            </connector>
+            <connector x="100" y="267" uid="9">
+                <from>k3</from>
+                <to>DelE</to>
+            </connector>
+            <connector x="169" y="178" uid="10">
+                <from>I</from>
+                <to>DelE</to>
+            </connector>
+            <connector x="100" y="268" uid="11">
+                <from>k3</from>
+                <to>DelI</to>
+            </connector>
+            <connector x="258" y="273" uid="12">
+                <from>E</from>
+                <to>DelI</to>
+            </connector>
+            <connector x="351" y="194" uid="13">
+                <from>k2</from>
+                <to>DelI</to>
+            </connector>
+            <connector x="151" y="211" uid="14">
+                <from>I</from>
+                <to>DelI</to>
+            </connector>
+            <connector x="312" y="124" uid="15">
+                <from>D</from>
+                <to>DelI</to>
+            </connector>
+            <connector x="93" y="279" uid="16">
+                <from>k3</from>
+                <to>DelF</to>
+            </connector>
+            <connector x="129" y="195" uid="17">
+                <from>I</from>
+                <to>DelF</to>
+            </connector>
+            <connector x="96" y="144" uid="18">
+                <from>k1</from>
+                <to>DelI</to>
+            </connector>
+            <stacked_container x="486" y="52" height="282" width="492" uid="19">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-26T12:10:26Z" time_precision="2" from="0" to="30">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <scale min="0" max="110" />
+                        <entity name="D" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="110" />
+                        <entity name="E" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="0" max="110" />
+                        <entity name="F" />
+                    </plot>
+                    <plot index="3" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <scale min="0" max="110" />
+                        <entity name="I" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="32" y="461" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="19" />
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>

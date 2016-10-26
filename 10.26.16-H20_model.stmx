@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>10.26.16-H20_model</name>
+        <uuid>7416beb4-00b2-429d-bdb8-17f20ebe9103</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Seconds" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>0</start>
+        <stop>40</stop>
+        <dt reciprocal="true">0.0625</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1424" height="802" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="H">
+            <eqn>200</eqn>
+            <outflow>Delta_H</outflow>
+            <non_negative />
+            <display x="94" y="60" color="blue" />
+        </stock>
+        <stock name="O">
+            <eqn>100</eqn>
+            <outflow>Delta_O</outflow>
+            <non_negative />
+            <display x="85" y="181" color="blue" />
+        </stock>
+        <stock name="Water">
+            <eqn>0</eqn>
+            <inflow>Delta_H20</inflow>
+            <non_negative />
+            <display x="376" y="114" color="blue" />
+        </stock>
+        <flow name="Delta_H20">
+            <eqn>H*O*K</eqn>
+            <non_negative />
+            <display x="277" y="114" color="blue" label_angle="317">
+                <pts>
+                    <pt x="200" y="114" />
+                    <pt x="354" y="114" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="K">
+            <eqn>0.005</eqn>
+            <display x="325" y="48" color="blue" />
+        </aux>
+        <flow name="Delta_O">
+            <eqn>O_per_H20*Delta_H20</eqn>
+            <non_negative />
+            <display x="206" y="182" color="blue" label_side="right" label_angle="280">
+                <pts>
+                    <pt x="107" y="182" />
+                    <pt x="305" y="182" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Delta_H">
+            <eqn>H_Per_H20*Delta_H20</eqn>
+            <non_negative />
+            <display x="185" y="55" color="blue">
+                <pts>
+                    <pt x="116" y="55" />
+                    <pt x="254" y="55" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="H_Per_H20">
+            <eqn>2</eqn>
+            <display x="224" y="20" color="blue" />
+        </aux>
+        <aux name="O_per_H20">
+            <eqn>1</eqn>
+            <display x="159" y="234" color="blue" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="2" page_rows="2" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT">
+            <connector x="106" y="76" uid="0">
+                <from>H</from>
+                <to>Delta_H20</to>
+            </connector>
+            <connector x="107" y="187" uid="1">
+                <from>O</from>
+                <to>Delta_H20</to>
+            </connector>
+            <connector x="316" y="46" uid="2">
+                <from>K</from>
+                <to>Delta_H20</to>
+            </connector>
+            <connector x="271" y="108" uid="3">
+                <from>Delta_H20</from>
+                <to>Delta_H</to>
+            </connector>
+            <connector x="277" y="123" uid="4">
+                <from>Delta_H20</from>
+                <to>Delta_O</to>
+            </connector>
+            <connector x="215" y="21" uid="5">
+                <from>H_Per_H20</from>
+                <to>Delta_H</to>
+            </connector>
+            <connector x="168" y="234" uid="6">
+                <from>O_per_H20</from>
+                <to>Delta_O</to>
+            </connector>
+            <stacked_container x="528" y="52" height="329" width="583" uid="7">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-26T10:48:12Z" time_precision="2" from="0" to="40">
+                    <plot index="0" pen_width="1" color="blue" precision="0.01" show_y_axis="true">
+                        <scale min="0" max="200" />
+                        <entity name="Water" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="200" />
+                        <entity name="H" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="0" max="200" />
+                        <entity name="O" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="545" y="63" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="7" />
+            <stacked_container x="530" y="427" height="325" width="576" uid="8">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-26T10:48:12Z" time_precision="2" from="0" to="40">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Delta_H" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <entity name="Delta_H20" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <entity name="Delta_O" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="535" y="426" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="8" />
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0.1</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
