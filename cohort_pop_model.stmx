@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>cohort_pop_model</name>
+        <uuid>abe0a9e4-42d3-4967-901a-6cf849383afd</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Years" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>1950</start>
+        <stop>2030</stop>
+        <dt>1</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1440" height="818" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="Age_0_to_1">
+            <inflow>birthing</inflow>
+            <inflow>Imigration_0_to_1</inflow>
+            <outflow>Flow_1</outflow>
+            <outflow>Death_0_to_1</outflow>
+            <non_negative />
+            <display x="157" y="147" color="blue" />
+        </stock>
+        <stock name="Age_1_to_2">
+            <inflow>Flow_1</inflow>
+            <inflow>Immigration_1_to_2</inflow>
+            <outflow>Flow_2</outflow>
+            <outflow>Death_1_to_2</outflow>
+            <non_negative />
+            <display x="272" y="242" color="blue" />
+        </stock>
+        <stock name="Age_65">
+            <inflow>Flow_3</inflow>
+            <non_negative />
+            <display x="493" y="422" color="blue" />
+        </stock>
+        <stock name="Age_20_30">
+            <inflow>Flow_2</inflow>
+            <outflow>Flow_3</outflow>
+            <non_negative />
+            <display x="367" y="325" color="blue" />
+        </stock>
+        <flow name="birthing">
+            <doc>Birth rate x 1/2 of pop wo produce offspring</doc>
+            <eqn>Birthrate* Age_20_30*1/2</eqn>
+            <non_negative />
+            <display x="81" y="150" color="blue" label_side="right" label_angle="82">
+                <pts>
+                    <pt x="28" y="150" />
+                    <pt x="135" y="150" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Birthrate">
+            <eqn>TIME</eqn>
+            <gf type="extrapolate">
+                <xscale min="1950" max="2030" />
+                <yscale min="0" max="1" />
+                <ypts>0.99299999999999999,0.95599999999999996,0.93700000000000006,0.89600000000000002,0.85599999999999998,0.82199999999999995,0.78100000000000003,0.75900000000000001,0.69299999999999995,0.66300000000000003,0.58899999999999997,0.56299999999999994,0.53700000000000003,0.504,0.49299999999999999,0.45200000000000001,0.433,0.41499999999999998,0.39300000000000002,0.38100000000000001,0.32200000000000001,0.30399999999999999,0.29299999999999998,0.28499999999999998,0.27800000000000002,0.27000000000000002,0.26700000000000002,0.26300000000000001,0.25600000000000001,0.252,0.24399999999999999,0.23300000000000001,0.22600000000000001,0.219,0.21099999999999999,0.20399999999999999,0.19600000000000001,0.185,0.17399999999999999,0.17000000000000001,0.159,0.14799999999999999,0.14799999999999999,0.14399999999999999,0.13700000000000001,0.126,0.115,0.104,0.092999999999999999,0.088999999999999996,0.081000000000000003,0.078,0.070000000000000007,0.063,0.058999999999999997,0.056000000000000001,0.056000000000000001,0.056000000000000001,0.048000000000000001,0.043999999999999997,0.036999999999999998,0.036999999999999998,0.033000000000000002,0.033000000000000002,0.033000000000000002,0.033000000000000002,0.036999999999999998,0.036999999999999998,0.036999999999999998,0.036999999999999998,0.036999999999999998,0.036999999999999998,0.036999999999999998,0.036999999999999998,0.036999999999999998,0.036999999999999998,0.036999999999999998,0.036999999999999998,0.033000000000000002,0.033000000000000002,0.033000000000000002,0.033000000000000002,0.033000000000000002,0.033000000000000002,0.033000000000000002,0.033000000000000002</ypts>
+            </gf>
+            <display x="125" y="42" color="blue" />
+        </aux>
+        <flow name="Flow_1">
+            <non_negative />
+            <display x="214" y="225" color="blue">
+                <pts>
+                    <pt x="179" y="164" />
+                    <pt x="179" y="225" />
+                    <pt x="250" y="225" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_2">
+            <non_negative />
+            <display x="307" y="318" color="blue" label_side="top" label_angle="86">
+                <pts>
+                    <pt x="269" y="259" />
+                    <pt x="269" y="318" />
+                    <pt x="345" y="318" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_3">
+            <non_negative />
+            <display x="422" y="422" color="blue">
+                <pts>
+                    <pt x="373" y="342" />
+                    <pt x="373" y="422" />
+                    <pt x="471" y="422" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="Final_Age_group">
+            <outflow>Flow_4</outflow>
+            <non_negative />
+            <display x="582" y="529" color="blue" />
+        </stock>
+        <aux name="Avg_Life_Span">
+            <eqn>TIME</eqn>
+            <gf>
+                <xscale min="1950" max="2030" />
+                <yscale min="0" max="100" />
+                <ypts>51.5,51.5,51.5,51.5,51.5,51.5,51.5,51.5,51.5,51.100000000000001,50.900000000000006,50.700000000000003,50.700000000000003,50.700000000000003,50.700000000000003,50.700000000000003,50.700000000000003,50.399999999999999,50.399999999999999,50.399999999999999,50.399999999999999,50.399999999999999,50.399999999999999,50.399999999999999,50.399999999999999,50.399999999999999,51.100000000000001,51.899999999999999,51.899999999999999,52.600000000000001,53.299999999999997,53.700000000000003,54.100000000000001,54.25,55.200000000000003,55.200000000000003,55.600000000000001,55.600000000000001,56.299999999999997,57,57.399999999999999,58.5,60,61.100000000000001,62.200000000000003,63.700000000000003,65.599999999999994,66.299999999999997,67.799999999999997,68.099999999999994,68.900000000000006,70.400000000000006,71.099999999999994,71.900000000000006,72.200000000000003,73,73.700000000000003,74.099999999999994,74.799999999999997,75.200000000000003,76.299999999999997,76.299999999999997,77,77.400000000000006,77.799999999999997,78.5,78.5,78.900000000000006,79.299999999999997,79.599999999999994,80.700000000000003,81.099999999999994,81.099999999999994,81.900000000000006,82.200000000000003,82.599999999999994,83,83,83.700000000000003,83.700000000000003,84.400000000000006</ypts>
+            </gf>
+            <display x="574" y="593" color="blue" />
+        </aux>
+        <flow name="Flow_4">
+            <eqn>Final_Age_group* 1/(Avg_Life_Span-65)</eqn>
+            <non_negative />
+            <display x="678" y="533" color="blue">
+                <pts>
+                    <pt x="604" y="533" />
+                    <pt x="752" y="533" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Death_0_to_1">
+            <eqn>Age_0_to_1*Death_Rate_0_to_1</eqn>
+            <non_negative />
+            <display x="359" y="147" color="blue">
+                <pts>
+                    <pt x="179" y="147" />
+                    <pt x="540" y="147" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Death_1_to_2">
+            <non_negative />
+            <display x="416" y="238" color="blue">
+                <pts>
+                    <pt x="294" y="238" />
+                    <pt x="539" y="238" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Death_Rate_0_to_1">
+            <eqn>TIME</eqn>
+            <gf>
+                <xscale min="1950" max="2030" />
+                <yscale min="0" max="1" />
+                <ypts>0.38900000000000001,0.38900000000000001,0.38900000000000001,0.38900000000000001,0.38900000000000001,0.38900000000000001,0.38900000000000001,0.38900000000000001,0.38900000000000001,0.38900000000000001,0.38900000000000001,0.38900000000000001,0.38900000000000001,0.38500000000000001,0.38500000000000001,0.38500000000000001,0.38300000000000001,0.38100000000000001,0.378,0.378,0.374,0.374,0.374,0.374,0.374,0.37,0.36849999999999999,0.36299999999999999,0.35899999999999999,0.35899999999999999,0.35599999999999998,0.34799999999999998,0.34399999999999997,0.34399999999999997,0.34100000000000003,0.33900000000000002,0.33700000000000002,0.33000000000000002,0.32600000000000001,0.32200000000000001,0.31900000000000001,0.315,0.311,0.30399999999999999,0.29599999999999999,0.29599999999999999,0.29299999999999998,0.28499999999999998,0.28499999999999998,0.28899999999999998,0.28499999999999998,0.28100000000000003,0.28100000000000003,0.28100000000000003,0.28100000000000003,0.27800000000000002,0.27400000000000002,0.27400000000000002,0.27400000000000002,0.26700000000000002,0.26300000000000001,0.25900000000000001,0.248,0.24399999999999999,0.24399999999999999,0.23699999999999999,0.22600000000000001,0.222,0.219,0.21099999999999999,0.20399999999999999,0.19600000000000001,0.189,0.18099999999999999,0.17549999999999999,0.17000000000000001,0.16700000000000001,0.156,0.152,0.13300000000000001,0.10000000000000001</ypts>
+            </gf>
+            <display x="417" y="83" color="blue" />
+        </aux>
+        <flow name="Imigration_0_to_1">
+            <eqn>Age_0_to_1/TOTAL_pop_at_time_step * number_of_immigrants_at_time_step</eqn>
+            <non_negative />
+            <display x="114" y="246" color="blue">
+                <pts>
+                    <pt x="71" y="246" />
+                    <pt x="157" y="246" />
+                    <pt x="157" y="164" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Immigration_1_to_2">
+            <non_negative />
+            <display x="176" y="311" color="blue">
+                <pts>
+                    <pt x="101" y="311" />
+                    <pt x="251" y="311" />
+                    <pt x="251" y="259" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Immagrants">
+            <display x="99" y="365" color="blue" label_side="top" label_angle="45" />
+        </aux>
+        <aux name="Converter_2">
+            <isee:summing />
+            <display x="501" y="28" color="blue" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="3" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT">
+            <connector x="359" y="343" uid="0">
+                <from>Age_20_30</from>
+                <to>birthing</to>
+            </connector>
+            <connector x="117" y="47" uid="1">
+                <from>Birthrate</from>
+                <to>birthing</to>
+            </connector>
+            <connector x="179" y="162" uid="2">
+                <from>Age_0_to_1</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="294" y="239" uid="3">
+                <from>Age_1_to_2</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="389" y="335" uid="4">
+                <from>Age_20_30</from>
+                <to>Flow_3</to>
+            </connector>
+            <connector x="583" y="595" uid="5">
+                <from>Avg_Life_Span</from>
+                <to>Flow_4</to>
+            </connector>
+            <connector x="604" y="520" uid="6">
+                <from>Final_Age_group</from>
+                <to>Flow_4</to>
+            </connector>
+            <connector x="180" y="135" uid="7">
+                <from>Age_0_to_1</from>
+                <to>Death_0_to_1</to>
+            </connector>
+            <connector x="408" y="83" uid="8">
+                <from>Death_Rate_0_to_1</from>
+                <to>Death_0_to_1</to>
+            </connector>
+            <connector x="140" y="164" uid="9">
+                <from>Age_0_to_1</from>
+                <to>Imigration_0_to_1</to>
+            </connector>
+            <text_box x="775" y="37" uid="10" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="355" height="519">Mateusz Grobelny                   IB491                               10.31.16&#x0D;&#x0A;Homework #4&#x0D;&#x0A;GIVEN: Cohort group, death rates of each cohort, brithrate from 1950, number of people in each cohort.&#x0D;&#x0D;&#x0A;QUESTION(S):&#x0D;&#x0D;&#x0A;Solution: &#x0D;1) Run model from 1950 1990.  Compare 1990 total with actual and give % difference (+/- 0.5%)&#x0D;&#x0D;2) Extend Deathrate, Brithrate, Immigration Rate, to 2010 by eye.&#x0D; &#x0D;3) Run model compare your 2010 pop est w/ actual give percent difference (+/- 0.5%). &#x0D;&#x0D;4) Project into 2030, compare total pop to census projection for 2030&#x0D;&#x0D;5) zero out immigration from 1950 to 2030, compare this result to pop model with immigration&#x0D;&#x0D;&#x0D;&#x0A;FURTHER QUESTIONS: &#x0D;&#x0D;&#x0A;ANALOGIES: &#x0D;&#x0D;Make sure units are consistent</text_box>
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
