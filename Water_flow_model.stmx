@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>Water_flow_model</name>
+        <uuid>5d9d70c3-999f-47e5-bcca-c8bf3d6aebee</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Months" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>1</start>
+        <stop>100</stop>
+        <dt>0.25</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1440" height="818" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="Jug1">
+            <eqn>10</eqn>
+            <outflow>Flow_1</outflow>
+            <non_negative />
+            <display x="99" y="169" color="blue" />
+        </stock>
+        <stock name="Jug2">
+            <eqn>0.001</eqn>
+            <inflow>Flow_1</inflow>
+            <outflow>Flow_2</outflow>
+            <non_negative />
+            <display x="259" y="256" color="blue" />
+        </stock>
+        <stock name="Jug3">
+            <eqn>0.001</eqn>
+            <inflow>Flow_2</inflow>
+            <non_negative />
+            <display x="439" y="258" color="blue" />
+        </stock>
+        <flow name="Flow_1">
+            <eqn>Flow_Constant</eqn>
+            <non_negative />
+            <display x="179" y="164" color="blue" label_side="top" label_angle="83">
+                <pts>
+                    <pt x="121" y="164" />
+                    <pt x="237" y="164" />
+                    <pt x="237" y="239" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_2">
+            <eqn>Flow_Constant*SQRT(Jug2-Jug3)</eqn>
+            <display x="349" y="260" color="blue">
+                <pts>
+                    <pt x="281" y="260" />
+                    <pt x="417" y="260" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Flow_Constant">
+            <eqn>0.05</eqn>
+            <display x="351" y="105" color="blue" label_side="top" label_angle="81" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="2" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT">
+            <connector x="110" y="186" uid="0">
+                <from>Jug1</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="281" y="242" uid="1">
+                <from>Jug2</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="417" y="244" uid="2">
+                <from>Jug3</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="341" y="102" uid="3">
+                <from>Flow_Constant</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="358" y="112" uid="4">
+                <from>Flow_Constant</from>
+                <to>Flow_2</to>
+            </connector>
+            <stacked_container x="551" y="53" height="282" width="492" uid="5">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-31T10:27:42Z" time_precision="3" from="1" to="100">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <scale min="0" max="10" />
+                        <entity name="Jug1" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="10" />
+                        <entity name="Jug2" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="0" max="10" />
+                        <entity name="Jug3" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="123" y="416" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="5" />
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0.1</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
