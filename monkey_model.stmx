@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>monkey_model</name>
+        <uuid>3831a270-0f33-492c-a0e6-4702a95922d1</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="minutes" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>0</start>
+        <stop>200</stop>
+        <dt>0.25</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1904" height="982" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="Square1">
+            <doc>c</doc>
+            <eqn>0&#x0A;</eqn>
+            <inflow>Initial_scent_production</inflow>
+            <outflow>Flow_1</outflow>
+            <outflow>Flow_6</outflow>
+            <non_negative />
+            <display x="252" y="632" color="blue" />
+        </stock>
+        <stock name="Square2">
+            <eqn>0</eqn>
+            <inflow>Flow_6</inflow>
+            <outflow>Flow_5</outflow>
+            <non_negative />
+            <display x="653" y="633" color="blue" label_side="bottom" label_angle="275" />
+        </stock>
+        <stock name="Square3">
+            <eqn>0</eqn>
+            <inflow>Flow_1</inflow>
+            <outflow>Flow_2</outflow>
+            <outflow>Flow_3</outflow>
+            <non_negative />
+            <display x="247" y="376" color="blue" label_angle="80" />
+        </stock>
+        <stock name="Square4">
+            <eqn>0</eqn>
+            <inflow>Flow_2</inflow>
+            <outflow>Flow_7</outflow>
+            <non_negative />
+            <display x="243" y="127" color="blue" />
+        </stock>
+        <stock name="Square5">
+            <eqn>0</eqn>
+            <inflow>Flow_3</inflow>
+            <inflow>Flow_5</inflow>
+            <outflow>Flow_4</outflow>
+            <non_negative />
+            <display x="654" y="378" color="blue" label_angle="98" />
+        </stock>
+        <stock name="Square6">
+            <eqn>0</eqn>
+            <inflow>Flow_4</inflow>
+            <inflow>Flow_7</inflow>
+            <non_negative />
+            <display x="655" y="133" color="blue" />
+        </stock>
+        <flow name="Flow_1">
+            <eqn>5*(Square3-Square1)*Square3 </eqn>
+            <display x="255" y="504" color="blue" label_angle="278">
+                <pts>
+                    <pt x="255" y="615" />
+                    <pt x="255" y="393" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_2">
+            <eqn>5*(Square4-Square3)</eqn>
+            <display x="246" y="251" color="blue" label_side="right" label_angle="341">
+                <pts>
+                    <pt x="246" y="359" />
+                    <pt x="246" y="144" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_3">
+            <eqn>5*(Square3-Square5)</eqn>
+            <display x="450" y="376" color="blue">
+                <pts>
+                    <pt x="269" y="376" />
+                    <pt x="632" y="376" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_4">
+            <eqn>5*(Square6-Square5)</eqn>
+            <display x="655" y="255" color="blue" label_side="left">
+                <pts>
+                    <pt x="655" y="361" />
+                    <pt x="655" y="150" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_5">
+            <eqn>-5*(Square5-Square2)</eqn>
+            <display x="653" y="505" color="blue" label_angle="278">
+                <pts>
+                    <pt x="653" y="616" />
+                    <pt x="653" y="395" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_6">
+            <eqn>5*(Square2-Square1)</eqn>
+            <display x="452" y="639" color="blue" label_side="top" label_angle="114">
+                <pts>
+                    <pt x="274" y="639" />
+                    <pt x="631" y="639" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_7">
+            <eqn>5*(Square6-Square4)</eqn>
+            <display x="449" y="130" color="blue">
+                <pts>
+                    <pt x="265" y="130" />
+                    <pt x="633" y="130" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Initial_scent_production">
+            <eqn>Converter_1*40 + Square1</eqn>
+            <non_negative />
+            <display x="172" y="637" color="blue">
+                <pts>
+                    <pt x="114" y="637" />
+                    <pt x="230" y="637" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Converter_1">
+            <eqn>40</eqn>
+            <gf>
+                <xscale min="0" max="50" />
+                <yscale min="0" max="1" />
+                <ypts>0.058999999999999997,0.311,0.51900000000000002,0.71899999999999997,0.89600000000000002,0.98099999999999998,0.996,0.98899999999999999,0.93300000000000005,0.874,0.72199999999999998,0.5,0.056000000000000001</ypts>
+            </gf>
+            <display x="108" y="493" color="blue" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="3" isee:converter_size="medium" interval="DT">
+            <connector x="108" y="502" uid="0">
+                <from>Converter_1</from>
+                <to>Initial_scent_production</to>
+            </connector>
+            <connector x="274" y="631" uid="1">
+                <from>Square1</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="226" y="393" uid="2">
+                <from>Square3</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="236" y="359" uid="3">
+                <from>Square3</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="270" y="363" uid="4">
+                <from>Square3</from>
+                <to>Flow_3</to>
+            </connector>
+            <connector x="631" y="368" uid="5">
+                <from>Square5</from>
+                <to>Flow_3</to>
+            </connector>
+            <connector x="675" y="367" uid="6">
+                <from>Square5</from>
+                <to>Flow_4</to>
+            </connector>
+            <connector x="676" y="378" uid="7">
+                <from>Square5</from>
+                <to>Flow_5</to>
+            </connector>
+            <connector x="675" y="635" uid="8">
+                <from>Square2</from>
+                <to>Flow_5</to>
+            </connector>
+            <connector x="631" y="627" uid="9">
+                <from>Square2</from>
+                <to>Flow_6</to>
+            </connector>
+            <connector x="253" y="649" uid="10">
+                <from>Square1</from>
+                <to>Flow_6</to>
+            </connector>
+            <connector x="677" y="134" uid="11">
+                <from>Square6</from>
+                <to>Flow_4</to>
+            </connector>
+            <connector x="633" y="150" uid="12">
+                <from>Square6</from>
+                <to>Flow_7</to>
+            </connector>
+            <connector x="264" y="111" uid="13">
+                <from>Square4</from>
+                <to>Flow_7</to>
+            </connector>
+            <connector x="223" y="144" uid="14">
+                <from>Square4</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="230" y="619" uid="15">
+                <from>Square1</from>
+                <to>Initial_scent_production</to>
+            </connector>
+            <stacked_container x="1063" y="54" height="282" width="492" uid="16">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-30T20:15:33Z" time_precision="2" from="0" to="200">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <scale min="0" max="0" />
+                        <entity name="Square6" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="0" />
+                        <entity name="Square4" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="1085" y="70" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="16" />
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0.01</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
