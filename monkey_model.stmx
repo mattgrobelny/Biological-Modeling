@@ -13,14 +13,14 @@
     </style>
     <sim_specs method="Euler" time_units="minutes" isee:pause_after_rates="false" isee:instantaneous_flows="false">
         <start>0</start>
-        <stop>200</stop>
+        <stop>1000</stop>
         <dt>0.25</dt>
     </sim_specs>
     <model_units />
     <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
-        <isee:window width="1904" height="982" />
+        <isee:window width="1440" height="818" />
         <isee:security />
-        <isee:print_setup width="570" height="750" />
+        <isee:print_setup width="612" height="792" />
     </isee:prefs>
     <isee:equation_prefs order_by="module" />
     <model>
@@ -28,113 +28,22 @@
             <doc>c</doc>
             <eqn>0&#x0A;</eqn>
             <inflow>Initial_scent_production</inflow>
-            <outflow>Flow_1</outflow>
-            <outflow>Flow_6</outflow>
+            <outflow>Diff_Sq1_to_Sq2</outflow>
+            <outflow>Diff_Sq1_to_Sq3</outflow>
             <non_negative />
             <display x="252" y="632" color="blue" />
         </stock>
-        <stock name="Square2">
-            <eqn>0</eqn>
-            <inflow>Flow_6</inflow>
-            <outflow>Flow_5</outflow>
-            <non_negative />
-            <display x="653" y="633" color="blue" label_side="bottom" label_angle="275" />
-        </stock>
-        <stock name="Square3">
-            <eqn>0</eqn>
-            <inflow>Flow_1</inflow>
-            <outflow>Flow_2</outflow>
-            <outflow>Flow_3</outflow>
-            <non_negative />
-            <display x="247" y="376" color="blue" label_angle="80" />
-        </stock>
-        <stock name="Square4">
-            <eqn>0</eqn>
-            <inflow>Flow_2</inflow>
-            <outflow>Flow_7</outflow>
-            <non_negative />
-            <display x="243" y="127" color="blue" />
-        </stock>
-        <stock name="Square5">
-            <eqn>0</eqn>
-            <inflow>Flow_3</inflow>
-            <inflow>Flow_5</inflow>
-            <outflow>Flow_4</outflow>
-            <non_negative />
-            <display x="654" y="378" color="blue" label_angle="98" />
-        </stock>
-        <stock name="Square6">
-            <eqn>0</eqn>
-            <inflow>Flow_4</inflow>
-            <inflow>Flow_7</inflow>
-            <non_negative />
-            <display x="655" y="133" color="blue" />
-        </stock>
-        <flow name="Flow_1">
-            <eqn>5*(Square3-Square1)*Square3 </eqn>
-            <display x="255" y="504" color="blue" label_angle="278">
+        <flow name="Diff_Sq1_to_Sq2">
+            <eqn>5*(Square1/(20*20*1)-(Square2/(20*20*1)))</eqn>
+            <display x="251" y="491" color="blue" label_angle="277">
                 <pts>
-                    <pt x="255" y="615" />
-                    <pt x="255" y="393" />
-                </pts>
-            </display>
-        </flow>
-        <flow name="Flow_2">
-            <eqn>5*(Square4-Square3)</eqn>
-            <display x="246" y="251" color="blue" label_side="right" label_angle="341">
-                <pts>
-                    <pt x="246" y="359" />
-                    <pt x="246" y="144" />
-                </pts>
-            </display>
-        </flow>
-        <flow name="Flow_3">
-            <eqn>5*(Square3-Square5)</eqn>
-            <display x="450" y="376" color="blue">
-                <pts>
-                    <pt x="269" y="376" />
-                    <pt x="632" y="376" />
-                </pts>
-            </display>
-        </flow>
-        <flow name="Flow_4">
-            <eqn>5*(Square6-Square5)</eqn>
-            <display x="655" y="255" color="blue" label_side="left">
-                <pts>
-                    <pt x="655" y="361" />
-                    <pt x="655" y="150" />
-                </pts>
-            </display>
-        </flow>
-        <flow name="Flow_5">
-            <eqn>-5*(Square5-Square2)</eqn>
-            <display x="653" y="505" color="blue" label_angle="278">
-                <pts>
-                    <pt x="653" y="616" />
-                    <pt x="653" y="395" />
-                </pts>
-            </display>
-        </flow>
-        <flow name="Flow_6">
-            <eqn>5*(Square2-Square1)</eqn>
-            <display x="452" y="639" color="blue" label_side="top" label_angle="114">
-                <pts>
-                    <pt x="274" y="639" />
-                    <pt x="631" y="639" />
-                </pts>
-            </display>
-        </flow>
-        <flow name="Flow_7">
-            <eqn>5*(Square6-Square4)</eqn>
-            <display x="449" y="130" color="blue">
-                <pts>
-                    <pt x="265" y="130" />
-                    <pt x="633" y="130" />
+                    <pt x="251" y="615" />
+                    <pt x="251" y="367" />
                 </pts>
             </display>
         </flow>
         <flow name="Initial_scent_production">
-            <eqn>Converter_1*40 + Square1</eqn>
+            <eqn>Sent_Influx*40</eqn>
             <non_negative />
             <display x="172" y="637" color="blue">
                 <pts>
@@ -143,97 +52,297 @@
                 </pts>
             </display>
         </flow>
-        <aux name="Converter_1">
-            <eqn>40</eqn>
+        <aux name="Sent_Influx">
+            <eqn>TIME</eqn>
             <gf>
                 <xscale min="0" max="50" />
                 <yscale min="0" max="1" />
-                <ypts>0.058999999999999997,0.311,0.51900000000000002,0.71899999999999997,0.89600000000000002,0.98099999999999998,0.996,0.98899999999999999,0.93300000000000005,0.874,0.72199999999999998,0.5,0.056000000000000001</ypts>
+                <ypts>0,0.311,0.51900000000000002,0.71899999999999997,0.89600000000000002,0.98099999999999998,0.996,0.98899999999999999,0.93300000000000005,0.874,0.72199999999999998,0.5,0</ypts>
             </gf>
-            <display x="108" y="493" color="blue" />
+            <display x="108" y="493" color="blue" label_side="top" label_angle="86" />
         </aux>
-        <display page_width="570" page_height="750" page_cols="3" isee:converter_size="medium" interval="DT">
-            <connector x="108" y="502" uid="0">
-                <from>Converter_1</from>
+        <stock name="Square2">
+            <eqn>0</eqn>
+            <inflow>Diff_Sq1_to_Sq2</inflow>
+            <outflow>Diff_Sq2_to_Sq5</outflow>
+            <outflow>Diff_Sq2_to_Sq4</outflow>
+            <non_negative />
+            <display x="246" y="350" color="blue" label_side="left" label_angle="165" />
+        </stock>
+        <stock name="Square3">
+            <doc>c</doc>
+            <eqn>0&#x0A;</eqn>
+            <inflow>Diff_Sq1_to_Sq3</inflow>
+            <outflow>Diff_Sq3_to_SQ4</outflow>
+            <non_negative />
+            <display x="510" y="636" color="blue" />
+        </stock>
+        <flow name="Diff_Sq3_to_SQ4">
+            <eqn>5*(Square3/(20*20*1)-(Square4/(20*20*1)))</eqn>
+            <display x="513" y="494" color="blue" label_angle="277">
+                <pts>
+                    <pt x="513" y="619" />
+                    <pt x="513" y="370" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="Square4">
+            <eqn>0</eqn>
+            <inflow>Diff_Sq3_to_SQ4</inflow>
+            <inflow>Diff_Sq2_to_Sq4</inflow>
+            <outflow>Diff_Sq_4_to_Sq5</outflow>
+            <non_negative />
+            <display x="511" y="353" color="blue" label_side="right" label_angle="352" />
+        </stock>
+        <stock name="Square5">
+            <doc>c</doc>
+            <eqn>0&#x0A;</eqn>
+            <inflow>Diff_Sq2_to_Sq5</inflow>
+            <outflow>Diff_Sq5_to_Sq6</outflow>
+            <outflow>Diff_to_open_air_from_sq5</outflow>
+            <non_negative />
+            <display x="263" y="134" color="blue" label_side="left" label_angle="142" />
+        </stock>
+        <flow name="Diff_Sq5_to_Sq6">
+            <eqn>5*(Square5/(20*20*1)-(Square6/(20*20*1)))</eqn>
+            <display x="392" y="121" color="blue">
+                <pts>
+                    <pt x="285" y="121" />
+                    <pt x="499" y="121" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="Square6">
+            <eqn>0</eqn>
+            <inflow>Diff_Sq5_to_Sq6</inflow>
+            <inflow>Diff_Sq_4_to_Sq5</inflow>
+            <outflow>Diff_to_open_air_from_sq_6</outflow>
+            <non_negative />
+            <display x="521" y="127" color="blue" label_side="right" label_angle="358" />
+        </stock>
+        <flow name="Diff_Sq1_to_Sq3">
+            <eqn>5*(Square1/(20*20*1)-(Square3/(20*20*1)))</eqn>
+            <display x="381" y="638" color="blue">
+                <pts>
+                    <pt x="274" y="638" />
+                    <pt x="488" y="638" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Diff_Sq2_to_Sq5">
+            <eqn>5*(Square2/(20*20*1)-(Square5/(20*20*1)))</eqn>
+            <display x="251" y="242" color="blue" label_side="right" label_angle="353">
+                <pts>
+                    <pt x="251" y="333" />
+                    <pt x="251" y="151" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Diff_Sq2_to_Sq4">
+            <eqn>5*(Square2/(20*20*1)-(Square4/(20*20*1)))</eqn>
+            <display x="378" y="347" color="blue">
+                <pts>
+                    <pt x="268" y="347" />
+                    <pt x="489" y="347" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Diff_Sq_4_to_Sq5">
+            <eqn>5*(Square4/(20*20*1)-(Square6/(20*20*1)))</eqn>
+            <display x="520" y="240" color="blue" label_side="left" label_angle="177">
+                <pts>
+                    <pt x="520" y="336" />
+                    <pt x="520" y="144" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Concetration_of_Scent_Sq6">
+            <eqn>Square6/(20*20*1)</eqn>
+            <units>mg per cubic meter</units>
+            <display x="704" y="80" color="blue" />
+        </aux>
+        <aux name="Concentration_of_Scent_SQ1">
+            <eqn>Square1/(20*20*1)</eqn>
+            <units>mg per cubic meter</units>
+            <display x="187" y="545" color="blue" label_side="top" label_angle="99" />
+        </aux>
+        <aux name="Scent_Detection_of_Monkeys">
+            <eqn>0.02</eqn>
+            <display x="709" y="186" color="blue" />
+        </aux>
+        <aux name="Concentration_of_Scent_sq5">
+            <eqn>Square5/(20*20*1)</eqn>
+            <scale min="0" max="1" />
+            <units>mg per cubic meter</units>
+            <display x="131" y="60" color="blue" label_side="top" label_angle="94">
+                <scale min="0" max="1" />
+            </display>
+        </aux>
+        <flow name="Diff_to_open_air_from_sq5">
+            <eqn>5*(Square5/(20*20*1))</eqn>
+            <non_negative />
+            <display x="264" y="69" color="blue" label_side="right" label_angle="19">
+                <pts>
+                    <pt x="264" y="117" />
+                    <pt x="264" y="22" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Diff_to_open_air_from_sq_6">
+            <eqn>5*(Square6/(20*20*1))</eqn>
+            <non_negative />
+            <display x="523" y="70" color="blue" label_side="right" label_angle="25">
+                <pts>
+                    <pt x="523" y="110" />
+                    <pt x="523" y="31" />
+                </pts>
+            </display>
+        </flow>
+        <display page_width="612" page_height="792" page_cols="4" page_rows="2" isee:converter_size="medium" interval="DT" scroll_y="616">
+            <connector x="224" y="367" uid="0">
+                <from>Square2</from>
+                <to>Diff_Sq1_to_Sq2</to>
+            </connector>
+            <connector x="507" y="371" uid="1">
+                <from>Square4</from>
+                <to>Diff_Sq3_to_SQ4</to>
+            </connector>
+            <connector x="531" y="635" uid="2">
+                <from>Square3</from>
+                <to>Diff_Sq3_to_SQ4</to>
+            </connector>
+            <connector x="499" y="110" uid="3">
+                <from>Square6</from>
+                <to>Diff_Sq5_to_Sq6</to>
+            </connector>
+            <connector x="108" y="502" uid="4">
+                <from>Sent_Influx</from>
                 <to>Initial_scent_production</to>
             </connector>
-            <connector x="274" y="631" uid="1">
+            <connector x="274" y="631" uid="5">
                 <from>Square1</from>
-                <to>Flow_1</to>
+                <to>Diff_Sq1_to_Sq2</to>
             </connector>
-            <connector x="226" y="393" uid="2">
-                <from>Square3</from>
-                <to>Flow_1</to>
-            </connector>
-            <connector x="236" y="359" uid="3">
-                <from>Square3</from>
-                <to>Flow_2</to>
-            </connector>
-            <connector x="270" y="363" uid="4">
-                <from>Square3</from>
-                <to>Flow_3</to>
-            </connector>
-            <connector x="631" y="368" uid="5">
+            <connector x="285" y="140" uid="6">
                 <from>Square5</from>
-                <to>Flow_3</to>
+                <to>Diff_Sq5_to_Sq6</to>
             </connector>
-            <connector x="675" y="367" uid="6">
-                <from>Square5</from>
-                <to>Flow_4</to>
+            <connector x="271" y="648" uid="7">
+                <from>Square1</from>
+                <to>Diff_Sq1_to_Sq3</to>
             </connector>
-            <connector x="676" y="378" uid="7">
-                <from>Square5</from>
-                <to>Flow_5</to>
+            <connector x="487" y="629" uid="8">
+                <from>Square3</from>
+                <to>Diff_Sq1_to_Sq3</to>
             </connector>
-            <connector x="675" y="635" uid="8">
+            <connector x="267" y="343" uid="9">
                 <from>Square2</from>
-                <to>Flow_5</to>
+                <to>Diff_Sq2_to_Sq4</to>
             </connector>
-            <connector x="631" y="627" uid="9">
+            <connector x="489" y="361" uid="10">
+                <from>Square4</from>
+                <to>Diff_Sq2_to_Sq4</to>
+            </connector>
+            <connector x="533" y="339" uid="11">
+                <from>Square4</from>
+                <to>Diff_Sq_4_to_Sq5</to>
+            </connector>
+            <connector x="543" y="134" uid="12">
+                <from>Square6</from>
+                <to>Diff_Sq_4_to_Sq5</to>
+            </connector>
+            <connector x="247" y="151" uid="13">
+                <from>Square5</from>
+                <to>Diff_Sq2_to_Sq5</to>
+            </connector>
+            <connector x="235" y="333" uid="14">
                 <from>Square2</from>
-                <to>Flow_6</to>
+                <to>Diff_Sq2_to_Sq5</to>
             </connector>
-            <connector x="253" y="649" uid="10">
-                <from>Square1</from>
-                <to>Flow_6</to>
-            </connector>
-            <connector x="677" y="134" uid="11">
+            <connector x="544" y="113" uid="15">
                 <from>Square6</from>
-                <to>Flow_4</to>
+                <to>Concetration_of_Scent_Sq6</to>
             </connector>
-            <connector x="633" y="150" uid="12">
-                <from>Square6</from>
-                <to>Flow_7</to>
-            </connector>
-            <connector x="264" y="111" uid="13">
-                <from>Square4</from>
-                <to>Flow_7</to>
-            </connector>
-            <connector x="223" y="144" uid="14">
-                <from>Square4</from>
-                <to>Flow_2</to>
-            </connector>
-            <connector x="230" y="619" uid="15">
+            <connector x="231" y="619" uid="16">
                 <from>Square1</from>
-                <to>Initial_scent_production</to>
+                <to>Concentration_of_Scent_SQ1</to>
             </connector>
-            <stacked_container x="1063" y="54" height="282" width="492" uid="16">
-                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-10-30T20:15:33Z" time_precision="2" from="0" to="200">
-                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
-                        <scale min="0" max="0" />
-                        <entity name="Square6" />
+            <connector x="240" y="133" uid="17">
+                <from>Square5</from>
+                <to>Concentration_of_Scent_sq5</to>
+            </connector>
+            <connector x="270" y="118" uid="18">
+                <from>Square5</from>
+                <to>Diff_to_open_air_from_sq5</to>
+            </connector>
+            <connector x="517" y="110" uid="19">
+                <from>Square6</from>
+                <to>Diff_to_open_air_from_sq_6</to>
+            </connector>
+            <stacked_container x="1436" y="103" height="295" width="527" uid="20">
+                <graph type="time_series" title="mg of scent per cubic meter (First 100 minutes)" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" locked="true" date_time="2016-11-01T13:42:24Z" time_precision="2" from="0" to="100">
+                    <doc>Annotation Legend:    &lt;insert all notes you want saved before this line&gt;&#x0D;   Concentration of Scent sq5&#x0D;      31.50   &#x0D;   Concetration of Scent Sq6&#x0D;      46.50   &#x0D;</doc>
+                    <plot index="0" pen_width="1" color="blue" precision="max" show_y_axis="true">
+                        <scale min="0" max="0.258" />
+                        <entity name="Concentration_of_Scent_sq5" />
+                        <data name="Run 23" />
                     </plot>
-                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
-                        <scale min="0" max="0" />
-                        <entity name="Square4" />
+                    <plot index="1" pen_width="1" color="red" precision="max" show_y_axis="true">
+                        <scale min="0" max="0.258" />
+                        <entity name="Concetration_of_Scent_Sq6" />
+                        <data name="Run 23" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="0" max="0.258" />
+                        <entity name="Scent_Detection_of_Monkeys" />
+                        <data name="Run 23" />
                     </plot>
                 </graph>
             </stacked_container>
-            <pad_icon x="1085" y="70" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="16" />
+            <pad_icon x="771" y="283" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="20" />
+            <stacked_container x="842" y="439" height="313" width="556" uid="21">
+                <graph type="time_series" title="mg of scent per block (20*20*1)" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-01T14:25:30Z" time_precision="2" from="0" to="1000">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <scale min="0" max="908.97" />
+                        <entity name="Square1" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <scale min="0" max="908.97" />
+                        <entity name="Square2" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="908.97" />
+                        <entity name="Square6" />
+                    </plot>
+                    <plot index="3" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="0" max="908.97" />
+                        <entity name="Square5" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="777" y="444" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 3" type="graph" icon_of="21" />
+            <stacked_container x="888" y="101" height="295" width="527" uid="22">
+                <graph type="time_series" title="mg of scent per cubic meter" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-01T14:25:30Z" time_precision="2" from="0" to="1000">
+                    <plot index="0" pen_width="1" color="blue" precision="0.01" show_y_axis="true">
+                        <scale min="0" max="0.258" />
+                        <entity name="Concentration_of_Scent_sq5" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="0.258" />
+                        <entity name="Concetration_of_Scent_Sq6" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="0" max="0.258" />
+                        <entity name="Scent_Detection_of_Monkeys" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="821" y="333" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="22" />
+            <text_box x="216" y="727" uid="23" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="457" height="765">Mateusz Grobelny                 Hw3                  11.1.16&#x0D;Given:  &#x0D;- trees that begin to blossom at time = 0 and finish at time = 50 &#x0D;-Scent production rate : max at 25minutes 40mg/min &#x0D;- Monkey scent detection threshold = 0.02mg/m^3&#x0D;-diffusion constant is 5 mg of scent per m^3 per minute&#x0D;&#x0D;Question: &#x0D;When can the monkeys detect the scent of the flowers?&#x0D;&#x0D;Solution:&#x0D;&#x0D;&#x0D;Answer: &#x0D;-Monkeys from Square5 would start to detect the scent at ~31.75 minutes after the bloom starts.&#x0D;-Monkeys from Square6 would start to detect the scent at ~46.75 minutes after the bloom starts.&#x0D;&#x0D;SOLUTION: &#x0D;rate of diffution = -D(deltaC) d is coefficient of diffusion &#x0D;&#x0D;Top Left Graph:&#x0D;- Shows mg of scent per cubic meter relative to the scent detection theshold of the monkeys. The lines pass the thresold early in the model.&#x0D;&#x0D;Top right Graph:&#x0D;-- Shows the first 100minutes of mg of scent per cubic meter relative to the scent detection theshold of the monkeys. The concetration of sent passes the detection thresold  at ~31.75 and ~46.75 for Square5 and Square6.&#x0D;&#x0D;&#x0A;FURTHER QUESTIONS:&#x0D;How would the time for detection change is we modeled air movement within the trees?&#x0D;&#x0D;&#x0A;ANALOGIES:&#x0D;Diffusion of  solutes within a solution, spatial movement  cells from a high to low concetration.&#x0D;</text_box>
             <style font-family="Arial" font-size="9" />
         </display>
         <interface page_width="788" page_height="528">
-            <simulation_delay>0.01</simulation_delay>
+            <simulation_delay>0.001</simulation_delay>
             <style font-family="Arial" font-size="9" />
         </interface>
         <style font-family="Arial" font-size="9" />
