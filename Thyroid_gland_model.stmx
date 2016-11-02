@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>Thyroid_gland_model</name>
+        <uuid>a5970dcc-3b2e-49e6-ab23-37b77eddb6c9</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Days" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>0</start>
+        <stop>600</stop>
+        <dt>0.25</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1424" height="802" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="Thyroid_Gland">
+            <eqn>6821</eqn>
+            <inflow>Flow_3</inflow>
+            <outflow>Flow4</outflow>
+            <non_negative />
+            <display x="246" y="352" color="blue" label_angle="21" />
+        </stock>
+        <stock name="Extra_Tissue_Iodine">
+            <eqn>682</eqn>
+            <inflow>Flow4</inflow>
+            <outflow>Flow_4</outflow>
+            <non_negative />
+            <display x="250" y="546" color="blue" label_side="right" label_angle="2" />
+        </stock>
+        <stock name="Inorganic_Iodine">
+            <eqn>81</eqn>
+            <inflow>Flow_1</inflow>
+            <outflow>Out_flow_1</outflow>
+            <non_negative />
+            <display x="247" y="96" color="blue" label_angle="85" />
+        </stock>
+        <flow name="Flow_1">
+            <eqn>(K3*Extra_Tissue_Iodine)+Dosing</eqn>
+            <non_negative />
+            <display x="374" y="100" color="blue" label_side="top" label_angle="107">
+                <pts>
+                    <pt x="479" y="100" />
+                    <pt x="269" y="100" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Dosing">
+            <eqn>150</eqn>
+            <display x="347" y="161" color="blue" />
+        </aux>
+        <aux name="K3">
+            <eqn>.08</eqn>
+            <display x="351" y="39" color="blue" />
+        </aux>
+        <flow name="Out_flow_1">
+            <eqn>Inorganic_Iodine*(K1+K4)</eqn>
+            <non_negative />
+            <display x="170" y="93" color="blue" label_side="top" label_angle="86">
+                <pts>
+                    <pt x="225" y="93" />
+                    <pt x="115" y="93" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="K4">
+            <eqn>1.68</eqn>
+            <display x="139" y="160" color="blue" />
+        </aux>
+        <aux name="K1">
+            <eqn>.84</eqn>
+            <display x="203" y="170" color="blue" />
+        </aux>
+        <flow name="Flow_3">
+            <eqn>K1*Inorganic_Iodine</eqn>
+            <non_negative />
+            <display x="155" y="355" color="blue">
+                <pts>
+                    <pt x="86" y="355" />
+                    <pt x="224" y="355" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow4">
+            <eqn>K2*Thyroid_Gland</eqn>
+            <non_negative />
+            <display x="246" y="449" color="blue" label_angle="278">
+                <pts>
+                    <pt x="246" y="369" />
+                    <pt x="246" y="529" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="K2">
+            <eqn>.01</eqn>
+            <display x="165" y="408" color="blue" />
+        </aux>
+        <aux name="K5">
+            <eqn>.02</eqn>
+            <display x="126" y="605" color="blue" />
+        </aux>
+        <flow name="Flow_4">
+            <eqn>(K3+K5)*Extra_Tissue_Iodine</eqn>
+            <non_negative />
+            <display x="150" y="541" color="blue" label_side="top" label_angle="86">
+                <pts>
+                    <pt x="228" y="541" />
+                    <pt x="73" y="541" />
+                </pts>
+            </display>
+        </flow>
+        <display page_width="570" page_height="750" page_cols="2" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT">
+            <connector x="431" y="170" uid="1">
+                <from>
+                    <alias uid="0" />
+                </from>
+                <to>Flow_1</to>
+            </connector>
+            <alias x="453" y="179" uid="0">
+                <of>Extra_Tissue_Iodine</of>
+            </alias>
+            <connector x="355" y="158" uid="2">
+                <from>Dosing</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="358" y="34" uid="3">
+                <from>K3</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="136" y="152" uid="4">
+                <from>K4</from>
+                <to>Out_flow_1</to>
+            </connector>
+            <connector x="196" y="165" uid="5">
+                <from>K1</from>
+                <to>Out_flow_1</to>
+            </connector>
+            <connector x="225" y="106" uid="6">
+                <from>Inorganic_Iodine</from>
+                <to>Out_flow_1</to>
+            </connector>
+            <connector x="247" y="113" uid="7">
+                <from>Inorganic_Iodine</from>
+                <to>Flow_3</to>
+            </connector>
+            <connector x="194" y="171" uid="8">
+                <from>K1</from>
+                <to>Flow_3</to>
+            </connector>
+            <connector x="264" y="369" uid="9">
+                <from>Thyroid_Gland</from>
+                <to>Flow4</to>
+            </connector>
+            <connector x="173" y="405" uid="10">
+                <from>K2</from>
+                <to>Flow4</to>
+            </connector>
+            <alias x="175" y="599" uid="11">
+                <of>K3</of>
+            </alias>
+            <connector x="168" y="595" uid="12">
+                <from>
+                    <alias uid="11" />
+                </from>
+                <to>Flow_4</to>
+            </connector>
+            <connector x="124" y="597" uid="13">
+                <from>K5</from>
+                <to>Flow_4</to>
+            </connector>
+            <connector x="228" y="535" uid="14">
+                <from>Extra_Tissue_Iodine</from>
+                <to>Flow_4</to>
+            </connector>
+            <stacked_container x="535" y="53" height="282" width="492" uid="15">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-02T10:59:52Z" time_precision="2" from="0" to="600">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Extra_Tissue_Iodine" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <entity name="Inorganic_Iodine" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <entity name="Thyroid_Gland" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="557" y="69" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="15" />
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>

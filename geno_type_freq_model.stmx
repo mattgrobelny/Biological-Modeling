@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>geno_type_freq_model</name>
+        <uuid>858cbf57-7729-4aa3-8beb-0b73ff5bfe0d</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Years" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>1</start>
+        <stop>1000</stop>
+        <dt>1</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1424" height="802" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="A_Hold">
+            <eqn>0</eqn>
+            <inflow>picking_A</inflow>
+            <outflow>Making_AA</outflow>
+            <outflow>Flow_1</outflow>
+            <non_negative />
+            <display x="255" y="94" color="blue" />
+        </stock>
+        <stock name="B_Hold">
+            <eqn>0</eqn>
+            <inflow>picking_B</inflow>
+            <outflow>Making_BB</outflow>
+            <outflow>Flow_2</outflow>
+            <non_negative />
+            <display x="268" y="339" color="blue" label_angle="61" />
+        </stock>
+        <flow name="picking_A">
+            <eqn>IF RAND_A&lt;= A_freq  THEN 1 ELSE 0</eqn>
+            <non_negative />
+            <display x="177" y="94" color="blue" label_side="top" label_angle="47">
+                <pts>
+                    <pt x="121" y="94" />
+                    <pt x="233" y="94" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="picking_B">
+            <eqn>IF picking_A = 0 THEN 1 ELSE 0</eqn>
+            <non_negative />
+            <display x="192" y="333" color="blue" label_angle="253">
+                <pts>
+                    <pt x="139" y="333" />
+                    <pt x="246" y="333" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Making_AA">
+            <eqn>IF A_Hold &gt;=2 THEN A_Hold ELSE 0</eqn>
+            <non_negative />
+            <multiplier>0.5</multiplier>
+            <display x="363" y="102" color="blue">
+                <pts>
+                    <pt x="277" y="102" />
+                    <pt x="450" y="102" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Making_BB">
+            <eqn>IF B_Hold =2 THEN B_Hold ELSE 0</eqn>
+            <non_negative />
+            <multiplier>0.5</multiplier>
+            <display x="381" y="336" color="blue" label_side="right" label_angle="37">
+                <pts>
+                    <pt x="290" y="336" />
+                    <pt x="473" y="336" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="AB">
+            <eqn>1</eqn>
+            <inflow>Flow_1</inflow>
+            <inflow>Flow_2</inflow>
+            <non_negative />
+            <display x="489" y="209" color="blue" />
+        </stock>
+        <flow name="Flow_1">
+            <eqn>IF A_Hold =1 and B_Hold=1 THEN 1 ELSE 0</eqn>
+            <non_negative />
+            <multiplier>0.5</multiplier>
+            <display x="353" y="192" color="blue" label_side="right" label_angle="87">
+                <pts>
+                    <pt x="240" y="111" />
+                    <pt x="240" y="192" />
+                    <pt x="467" y="192" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_2">
+            <eqn>IF A_Hold =1 and B_Hold=1 THEN 1 ELSE 0</eqn>
+            <non_negative />
+            <multiplier>0.5</multiplier>
+            <display x="356" y="226" color="blue" label_side="right" label_angle="278">
+                <pts>
+                    <pt x="246" y="322" />
+                    <pt x="246" y="226" />
+                    <pt x="467" y="226" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="AA">
+            <eqn>1</eqn>
+            <inflow>Making_AA</inflow>
+            <non_negative />
+            <display x="472" y="103" color="blue" />
+        </stock>
+        <stock name="BB">
+            <eqn>1</eqn>
+            <inflow>Making_BB</inflow>
+            <non_negative />
+            <display x="495" y="349" color="blue" />
+        </stock>
+        <aux name="A_freq">
+            <eqn>0.4</eqn>
+            <display x="52" y="116" color="blue" label_side="left" label_angle="238" />
+        </aux>
+        <aux name="RAND_A">
+            <eqn>RANDOM(0, 1)</eqn>
+            <display x="123" y="51" color="blue" />
+        </aux>
+        <aux name="Total_Genotypes">
+            <eqn>AA + AB + BB</eqn>
+            <isee:summing />
+            <display x="657" y="196" color="blue" label_side="right" label_angle="16" />
+        </aux>
+        <aux name="AA_freq">
+            <eqn>AA/Total_Genotypes</eqn>
+            <display x="546" y="94" color="blue" />
+        </aux>
+        <aux name="AB_freq">
+            <eqn>AB/Total_Genotypes</eqn>
+            <display x="570" y="203" color="blue" />
+        </aux>
+        <aux name="BB_freq">
+            <eqn>BB/Total_Genotypes</eqn>
+            <display x="583" y="345" color="blue" />
+        </aux>
+        <aux name="Freq_sum">
+            <eqn>AA_freq + AB_freq + BB_freq</eqn>
+            <isee:summing />
+            <display x="757" y="81" color="blue" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="2" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT">
+            <connector x="282" y="356" uid="0">
+                <from>B_Hold</from>
+                <to>Making_BB</to>
+            </connector>
+            <connector x="267" y="111" uid="1">
+                <from>A_Hold</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="132" y="54" uid="2">
+                <from>RAND_A</from>
+                <to>picking_A</to>
+            </connector>
+            <connector x="277" y="90" uid="3">
+                <from>A_Hold</from>
+                <to>Making_AA</to>
+            </connector>
+            <connector x="289" y="332" uid="4">
+                <from>B_Hold</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="62" y="117" uid="5">
+                <from>A_freq</from>
+                <to>picking_A</to>
+            </connector>
+            <connector x="177" y="103" uid="6">
+                <from>picking_A</from>
+                <to>picking_B</to>
+            </connector>
+            <connector x="248" y="111" uid="7">
+                <from>A_Hold</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="267" y="323" uid="8">
+                <from>B_Hold</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="650" y="191" uid="9">
+                <from>Total_Genotypes</from>
+                <to>AA_freq</to>
+            </connector>
+            <connector x="649" y="201" uid="10">
+                <from>Total_Genotypes</from>
+                <to>AB_freq</to>
+            </connector>
+            <connector x="656" y="206" uid="11">
+                <from>Total_Genotypes</from>
+                <to>BB_freq</to>
+            </connector>
+            <connector x="494" y="93" uid="12">
+                <from>AA</from>
+                <to>AA_freq</to>
+            </connector>
+            <connector x="511" y="203" uid="13">
+                <from>AB</from>
+                <to>AB_freq</to>
+            </connector>
+            <connector x="518" y="340" uid="14">
+                <from>BB</from>
+                <to>BB_freq</to>
+            </connector>
+            <stacked_container x="35" y="415" height="282" width="492" uid="15">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-02T12:07:37Z" time_precision="2" from="1" to="1000">
+                    <plot index="0" pen_width="1" color="blue" precision="0.01" show_y_axis="true">
+                        <scale min="0" max="1" />
+                        <entity name="AA_freq" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="fuchsia" precision="0.01" show_y_axis="true">
+                        <scale min="0" max="1" />
+                        <entity name="AB_freq" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="#008F44" precision="0.01" show_y_axis="true">
+                        <scale min="0" max="1" />
+                        <entity name="BB_freq" />
+                    </plot>
+                    <plot index="3" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <scale min="0" max="1" />
+                        <entity name="Freq_sum" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="57" y="431" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="15" />
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
