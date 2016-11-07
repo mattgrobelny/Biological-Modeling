@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>odor_model</name>
+        <uuid>7a7e9564-b212-480c-b410-a6c47b76181d</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Months" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>0</start>
+        <stop>500</stop>
+        <dt>0.25</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1424" height="802" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="A">
+            <eqn>0</eqn>
+            <inflow>Flow_1</inflow>
+            <non_negative />
+            <display x="425" y="92" color="blue" />
+        </stock>
+        <stock name="B">
+            <eqn>0</eqn>
+            <inflow>Flow_2</inflow>
+            <non_negative />
+            <display x="423" y="272" color="blue" />
+        </stock>
+        <stock name="C">
+            <eqn>0</eqn>
+            <inflow>Flow_3</inflow>
+            <non_negative />
+            <display x="425" y="459" color="blue" />
+        </stock>
+        <flow name="Flow_1">
+            <eqn>IF Odor &gt;= 0.5 AND Odor &lt;= 1.5 THEN 1 ELSE -A</eqn>
+            <display x="324" y="92" color="blue">
+                <pts>
+                    <pt x="245" y="92" />
+                    <pt x="403" y="92" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_2">
+            <eqn>IF Odor &gt; 1.5 AND Odor &lt;= 2.5 THEN 1 ELSE -B</eqn>
+            <display x="313" y="272" color="blue">
+                <pts>
+                    <pt x="225" y="272" />
+                    <pt x="401" y="272" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_3">
+            <eqn>IF Odor &gt;2.5 AND Odor &lt;= 3.5 THEN 1 ELSE -C</eqn>
+            <display x="311" y="453" color="blue">
+                <pts>
+                    <pt x="219" y="453" />
+                    <pt x="403" y="453" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Odor">
+            <eqn>IF TIME &lt;= 15 THEN NORMAL(1, 0.4) ELSE NORMAL(3, 0.4)</eqn>
+            <display x="87" y="266" color="blue" label_side="left" label_angle="135" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="3" page_rows="2" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT" scroll_y="112">
+            <connector x="92" y="259" uid="0">
+                <from>Odor</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="97" y="261" uid="1">
+                <from>Odor</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="89" y="272" uid="2">
+                <from>Odor</from>
+                <to>Flow_3</to>
+            </connector>
+            <connector x="403" y="78" uid="3">
+                <from>A</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="401" y="255" uid="4">
+                <from>B</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="418" y="442" uid="5">
+                <from>C</from>
+                <to>Flow_3</to>
+            </connector>
+            <stacked_container x="532" y="277" height="394" width="687" uid="6">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-07T12:09:22Z" time_precision="2" from="0" to="30">
+                    <plot index="0" pen_width="1" color="blue" precision="0.01" show_y_axis="true">
+                        <scale min="0" max="6" />
+                        <entity name="A" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="0.01" show_y_axis="true">
+                        <scale min="0" max="6" />
+                        <entity name="B" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="0.01" show_y_axis="true">
+                        <scale min="0" max="6" />
+                        <entity name="C" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="670" y="188" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="6" />
+            <stacked_container x="1" y="553" height="282" width="492" uid="7">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-07T12:09:22Z" time_precision="2" from="0" to="30">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Odor" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="23" y="569" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="7" />
+            <text_box x="559" y="38" uid="8" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="260" height="58">Odor Model:&#x0D;-Three nerves, which detect A, B C.&#x0D;-Threshold for detection is set in each flow</text_box>
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
