@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>geno_type_freq_model_V2</name>
+        <uuid>3c71e099-1fd4-4efc-b801-c878c60f9835</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Months" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>0</start>
+        <stop>1500</stop>
+        <dt reciprocal="true">0.25</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1424" height="802" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="a">
+            <eqn>30000</eqn>
+            <inflow>Releasing_a</inflow>
+            <outflow>a_Mating</outflow>
+            <outflow>Mutate</outflow>
+            <non_negative />
+            <display x="237" y="173" color="blue" />
+        </stock>
+        <stock name="b">
+            <eqn>30000</eqn>
+            <inflow>Releasing_b</inflow>
+            <inflow>Mutate</inflow>
+            <outflow>b_Mating</outflow>
+            <non_negative />
+            <display x="235" y="431" color="blue" />
+        </stock>
+        <stock name="AA">
+            <eqn>1</eqn>
+            <inflow>Making_AA</inflow>
+            <outflow>AA_reMating</outflow>
+            <non_negative />
+            <display x="841" y="159" color="blue" />
+        </stock>
+        <stock name="AB">
+            <eqn>1</eqn>
+            <inflow>Making_AB</inflow>
+            <outflow>AB_reMating</outflow>
+            <non_negative />
+            <display x="842" y="297" color="blue" />
+        </stock>
+        <stock name="BB">
+            <eqn>1</eqn>
+            <inflow>Making_BB</inflow>
+            <outflow>BB_reMating</outflow>
+            <non_negative />
+            <display x="845" y="466" color="blue" />
+        </stock>
+        <flow name="Releasing_a">
+            <eqn>2*AA*Fit_AA+AB*Fit_AB</eqn>
+            <non_negative />
+            <display x="157" y="169" color="blue" label_angle="318">
+                <pts>
+                    <pt x="100" y="169" />
+                    <pt x="215" y="169" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Releasing_b">
+            <eqn>2*BB*Fit_BB+AB*Fit_AB</eqn>
+            <non_negative />
+            <display x="152" y="426" color="blue" label_side="right" label_angle="85">
+                <pts>
+                    <pt x="92" y="426" />
+                    <pt x="213" y="426" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="a_Mating">
+            <eqn>a</eqn>
+            <non_negative />
+            <display x="311" y="167" color="blue">
+                <pts>
+                    <pt x="259" y="167" />
+                    <pt x="364" y="167" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="b_Mating">
+            <eqn>b</eqn>
+            <non_negative />
+            <display x="359" y="434" color="blue">
+                <pts>
+                    <pt x="257" y="434" />
+                    <pt x="461" y="434" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Total_alleles">
+            <eqn>a + b</eqn>
+            <isee:summing />
+            <display x="124" y="256" color="blue" />
+        </aux>
+        <aux name="a_Freq">
+            <eqn>a/Total_alleles</eqn>
+            <display x="157" y="227" color="blue" label_side="top" label_angle="122" />
+        </aux>
+        <flow name="Making_AA">
+            <eqn>(a_Freq^2)*Total_alleles/2</eqn>
+            <non_negative />
+            <display x="769" y="161" color="blue" label_side="top" label_angle="69">
+                <pts>
+                    <pt x="720" y="161" />
+                    <pt x="819" y="161" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Making_AB">
+            <eqn>2*a_Freq*(1-a_Freq)*Total_alleles/2</eqn>
+            <non_negative />
+            <display x="757" y="291" color="blue" label_side="top" label_angle="107">
+                <pts>
+                    <pt x="695" y="291" />
+                    <pt x="820" y="291" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Making_BB">
+            <eqn>((1-a_Freq)^2)*Total_alleles/2</eqn>
+            <non_negative />
+            <display x="766" y="464" color="blue">
+                <pts>
+                    <pt x="710" y="464" />
+                    <pt x="823" y="464" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="AA_reMating">
+            <eqn>AA</eqn>
+            <non_negative />
+            <display x="946" y="159" color="blue">
+                <pts>
+                    <pt x="863" y="159" />
+                    <pt x="1030" y="159" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="AB_reMating">
+            <eqn>AB</eqn>
+            <non_negative />
+            <display x="958" y="295" color="blue">
+                <pts>
+                    <pt x="864" y="295" />
+                    <pt x="1052" y="295" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="BB_reMating">
+            <eqn>BB</eqn>
+            <non_negative />
+            <display x="962" y="469" color="blue">
+                <pts>
+                    <pt x="867" y="469" />
+                    <pt x="1057" y="469" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Total_Genotypes">
+            <eqn>AA + AB + BB</eqn>
+            <isee:summing />
+            <display x="1243" y="272" color="blue" label_side="right" label_angle="344" />
+        </aux>
+        <aux name="AA_Freq">
+            <eqn>AA/Total_Genotypes</eqn>
+            <scale min="0" max="1" />
+            <display x="1026" y="221" color="blue">
+                <scale min="0" max="1" />
+            </display>
+        </aux>
+        <aux name="AB_Freq">
+            <eqn>AB/Total_Genotypes</eqn>
+            <scale min="0" max="1" />
+            <display x="999" y="351" color="blue">
+                <scale min="0" max="1" />
+            </display>
+        </aux>
+        <aux name="BB_Freq">
+            <eqn>BB/Total_Genotypes</eqn>
+            <scale min="0" max="1" />
+            <display x="1016" y="535" color="blue">
+                <scale min="0" max="1" />
+            </display>
+        </aux>
+        <flow name="Mutate">
+            <eqn>IF Mut_Rate&gt;=0 THEN a*Mut_Rate ELSE Mut_Rate*b</eqn>
+            <display x="231" y="302" color="blue" label_side="right" label_angle="347">
+                <pts>
+                    <pt x="231" y="190" />
+                    <pt x="231" y="414" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Mut_Rate">
+            <eqn>RANDOM(-0.05, 0.05)</eqn>
+            <display x="148" y="323" color="blue" />
+        </aux>
+        <aux name="Fit_AA">
+            <eqn>0.4</eqn>
+            <display x="106" y="84" color="blue" label_side="right" label_angle="16" />
+        </aux>
+        <aux name="Fit_BB">
+            <eqn>0.4</eqn>
+            <display x="74" y="449" color="blue" />
+        </aux>
+        <aux name="Fit_AB">
+            <eqn>0.2</eqn>
+            <display x="59" y="80" color="blue" label_side="top" label_angle="86" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="3" page_rows="2" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT" scroll_y="160">
+            <connector x="131" y="262" uid="0">
+                <from>Total_alleles</from>
+                <to>a_Freq</to>
+            </connector>
+            <connector x="231" y="190" uid="1">
+                <from>a</from>
+                <to>a_Freq</to>
+            </connector>
+            <alias x="634" y="255" uid="2">
+                <of>a_Freq</of>
+                <label_side>top</label_side>
+                <label_angle>118</label_angle>
+            </alias>
+            <connector x="640" y="247" uid="3">
+                <from>
+                    <alias uid="2" />
+                </from>
+                <to>Making_AA</to>
+            </connector>
+            <connector x="643" y="254" uid="4">
+                <from>
+                    <alias uid="2" />
+                </from>
+                <to>Making_AB</to>
+            </connector>
+            <connector x="634" y="264" uid="5">
+                <from>
+                    <alias uid="2" />
+                </from>
+                <to>Making_BB</to>
+            </connector>
+            <alias x="894" y="227" uid="6">
+                <of>Total_alleles</of>
+            </alias>
+            <alias x="872" y="393" uid="7">
+                <of>Total_alleles</of>
+            </alias>
+            <connector x="885" y="226" uid="8">
+                <from>
+                    <alias uid="6" />
+                </from>
+                <to>Making_AA</to>
+            </connector>
+            <connector x="863" y="392" uid="9">
+                <from>
+                    <alias uid="7" />
+                </from>
+                <to>Making_BB</to>
+            </connector>
+            <connector x="884" y="225" uid="10">
+                <from>
+                    <alias uid="6" />
+                </from>
+                <to>Making_AB</to>
+            </connector>
+            <connector x="854" y="177" uid="11">
+                <from>AA</from>
+                <to>AA_Freq</to>
+            </connector>
+            <connector x="858" y="314" uid="12">
+                <from>AB</from>
+                <to>AB_Freq</to>
+            </connector>
+            <connector x="851" y="484" uid="13">
+                <from>BB</from>
+                <to>BB_Freq</to>
+            </connector>
+            <connector x="1238" y="270" uid="14">
+                <from>Total_Genotypes</from>
+                <to>AA_Freq</to>
+            </connector>
+            <connector x="1237" y="274" uid="15">
+                <from>Total_Genotypes</from>
+                <to>AB_Freq</to>
+            </connector>
+            <connector x="1238" y="283" uid="16">
+                <from>Total_Genotypes</from>
+                <to>BB_Freq</to>
+            </connector>
+            <connector x="863" y="144" uid="17">
+                <from>AA</from>
+                <to>AA_reMating</to>
+            </connector>
+            <connector x="864" y="281" uid="18">
+                <from>AB</from>
+                <to>AB_reMating</to>
+            </connector>
+            <connector x="868" y="451" uid="19">
+                <from>BB</from>
+                <to>BB_reMating</to>
+            </connector>
+            <alias x="325" y="81" uid="20">
+                <of>AA</of>
+            </alias>
+            <alias x="66" y="281" uid="21">
+                <of>AB</of>
+                <label_side>left</label_side>
+                <label_angle>172</label_angle>
+            </alias>
+            <alias x="145" y="511" uid="22">
+                <of>BB</of>
+            </alias>
+            <connector x="303" y="70" uid="23">
+                <from>
+                    <alias uid="20" />
+                </from>
+                <to>Releasing_a</to>
+            </connector>
+            <connector x="69" y="265" uid="24">
+                <from>
+                    <alias uid="21" />
+                </from>
+                <to>Releasing_a</to>
+            </connector>
+            <connector x="163" y="494" uid="25">
+                <from>
+                    <alias uid="22" />
+                </from>
+                <to>Releasing_b</to>
+            </connector>
+            <connector x="67" y="299" uid="26">
+                <from>
+                    <alias uid="21" />
+                </from>
+                <to>Releasing_b</to>
+            </connector>
+            <connector x="252" y="156" uid="27">
+                <from>a</from>
+                <to>a_Mating</to>
+            </connector>
+            <connector x="251" y="414" uid="28">
+                <from>b</from>
+                <to>b_Mating</to>
+            </connector>
+            <connector x="151" y="315" uid="29">
+                <from>Mut_Rate</from>
+                <to>Mutate</to>
+            </connector>
+            <connector x="244" y="190" uid="30">
+                <from>a</from>
+                <to>Mutate</to>
+            </connector>
+            <connector x="253" y="414" uid="31">
+                <from>b</from>
+                <to>Mutate</to>
+            </connector>
+            <connector x="103" y="93" uid="32">
+                <from>Fit_AA</from>
+                <to>Releasing_a</to>
+            </connector>
+            <connector x="62" y="89" uid="33">
+                <from>Fit_AB</from>
+                <to>Releasing_a</to>
+            </connector>
+            <connector x="82" y="453" uid="34">
+                <from>Fit_BB</from>
+                <to>Releasing_b</to>
+            </connector>
+            <alias x="76" y="501" uid="35">
+                <of>Fit_AB</of>
+            </alias>
+            <connector x="85" y="501" uid="36">
+                <from>
+                    <alias uid="35" />
+                </from>
+                <to>Releasing_b</to>
+            </connector>
+            <stacked_container x="59" y="566" height="282" width="492" uid="37">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-07T11:10:56Z" time_precision="2" from="0" to="500">
+                    <plot index="0" pen_width="1" color="blue" precision="0.01" show_y_axis="true">
+                        <entity name="AA_Freq" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="0.01" show_y_axis="true">
+                        <entity name="AB_Freq" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="0.01" show_y_axis="true">
+                        <entity name="BB_Freq" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="81" y="582" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="37" />
+            <text_box x="999" y="8" uid="38" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="260" height="58">Genotype Model&#x0D;- Mutation between a and b alleles&#x0D;- Fittness of each allele &#x0D;</text_box>
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0.001</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
