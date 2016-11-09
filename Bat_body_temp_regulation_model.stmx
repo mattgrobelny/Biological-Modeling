@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>Bat_body_temp_regulation_mode</name>
+        <uuid>3f1daee3-e1f2-4e18-aa23-ac6db0a145d5</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Months" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>0</start>
+        <stop>30</stop>
+        <dt>0.25</dt>
+    </sim_specs>
+    <model_units />
+    <isee:sensi_specs run="true" runs="9">
+        <method>multivariate</method>
+        <isee:variable max="24" min="10" type="incremental" name="Ambient_Temp">
+            <num_samples>4</num_samples>
+        </isee:variable>
+    </isee:sensi_specs>
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1421" height="802" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="Body_Temp">
+            <eqn>10</eqn>
+            <inflow>Heat_Gain</inflow>
+            <outflow>Heat_Loss</outflow>
+            <non_negative />
+            <display x="250" y="134" color="blue" />
+        </stock>
+        <flow name="Heat_Loss">
+            <eqn>K_Behavior_Factor*(Body_Temp-Ambient_Temp)</eqn>
+            <non_negative />
+            <display x="381" y="135" color="blue">
+                <pts>
+                    <pt x="272" y="135" />
+                    <pt x="491" y="135" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Ambient_Temp">
+            <eqn>14</eqn>
+            <display x="425" y="62" color="blue" label_side="top" label_angle="62" />
+        </aux>
+        <aux name="K_Behavior_Factor">
+            <eqn>Ambient_Temp</eqn>
+            <gf>
+                <xscale min="0" max="50" />
+                <yscale min="0" max="1" />
+                <ypts>0.38100000000000001,0.39600000000000002,0.433,0.49299999999999999,0.56699999999999995,0.626,0.72599999999999998,1,1,1,1,1,1,1</ypts>
+            </gf>
+            <display x="539" y="82" color="blue" />
+        </aux>
+        <flow name="Heat_Gain">
+            <eqn>QR*EXP(-A*(35-Body_Temp))</eqn>
+            <non_negative />
+            <display x="172" y="127" color="blue" label_side="top" label_angle="66">
+                <pts>
+                    <pt x="116" y="127" />
+                    <pt x="228" y="127" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="QR">
+            <eqn>IF (2+2*(TN-Body_Temp)) &lt;= 10 THEN 2+2*(TN-Body_Temp) ELSE 10</eqn>
+            <display x="118" y="210" color="blue" />
+        </aux>
+        <aux name="A">
+            <eqn>.0693</eqn>
+            <display x="179" y="175" color="blue" />
+        </aux>
+        <aux name="TN">
+            <eqn>35</eqn>
+            <display x="182" y="262" color="blue" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="3" isee:converter_size="medium" zoom="75" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT">
+            <connector x="416" y="62" uid="0">
+                <from>Ambient_Temp</from>
+                <to>Heat_Loss</to>
+            </connector>
+            <connector x="530" y="81" uid="1">
+                <from>K_Behavior_Factor</from>
+                <to>Heat_Loss</to>
+            </connector>
+            <connector x="435" y="59" uid="2">
+                <from>Ambient_Temp</from>
+                <to>K_Behavior_Factor</to>
+            </connector>
+            <connector x="265" y="116" uid="3">
+                <from>Body_Temp</from>
+                <to>Heat_Loss</to>
+            </connector>
+            <connector x="113" y="202" uid="4">
+                <from>QR</from>
+                <to>Heat_Gain</to>
+            </connector>
+            <connector x="172" y="259" uid="5">
+                <from>TN</from>
+                <to>QR</to>
+            </connector>
+            <connector x="171" y="172" uid="6">
+                <from>A</from>
+                <to>Heat_Gain</to>
+            </connector>
+            <connector x="238" y="151" uid="7">
+                <from>Body_Temp</from>
+                <to>QR</to>
+            </connector>
+            <connector x="235" y="118" uid="8">
+                <from>Body_Temp</from>
+                <to>Heat_Gain</to>
+            </connector>
+            <stacked_container x="521" y="285" height="422" width="733" uid="9">
+                <graph type="scatter" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-09T12:10:38Z" comparative="true" time_precision="2">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Ambient_Temp" />
+                        <data name="Run 64" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Body_Temp" />
+                        <data name="Run 64" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Ambient_Temp" />
+                        <data name="Run 65" />
+                    </plot>
+                    <plot index="3" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Body_Temp" />
+                        <data name="Run 65" />
+                    </plot>
+                    <plot index="4" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Ambient_Temp" />
+                        <data name="Run 66" />
+                    </plot>
+                    <plot index="5" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Body_Temp" />
+                        <data name="Run 66" />
+                    </plot>
+                    <plot index="6" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Ambient_Temp" />
+                        <data name="Run 67" />
+                    </plot>
+                    <plot index="7" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Body_Temp" />
+                        <data name="Run 67" />
+                    </plot>
+                    <plot index="8" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Ambient_Temp" />
+                        <data name="Run 68" />
+                    </plot>
+                    <plot index="9" pen_width="1" color="#7F00FF" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Body_Temp" />
+                        <data name="Run 68" />
+                    </plot>
+                    <plot index="10" pen_width="1" color="#7F00FF" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Ambient_Temp" />
+                        <data name="Run 69" />
+                    </plot>
+                    <plot index="11" pen_width="1" color="#0CA0FF" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Body_Temp" />
+                        <data name="Run 69" />
+                    </plot>
+                    <plot index="12" pen_width="1" color="#0CA0FF" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Ambient_Temp" />
+                        <data name="Run 70" />
+                    </plot>
+                    <plot index="13" pen_width="1" color="lime" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Body_Temp" />
+                        <data name="Run 70" />
+                    </plot>
+                    <plot index="14" pen_width="1" color="lime" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Ambient_Temp" />
+                        <data name="Run 71" />
+                    </plot>
+                    <plot index="15" pen_width="1" color="#FF007F" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Body_Temp" />
+                        <data name="Run 71" />
+                    </plot>
+                    <plot index="16" pen_width="1" color="#FF007F" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Ambient_Temp" />
+                        <data name="Run 72" />
+                    </plot>
+                    <plot index="17" pen_width="1" color="aqua" precision="1" show_y_axis="true">
+                        <scale min="10" max="32.08" />
+                        <entity name="Body_Temp" />
+                        <data name="Run 72" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="688" y="198" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="9" />
+            <text_box x="852" y="56" uid="10" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="313" height="201">Emergent properties:&#x0D;Bat is able to maintain body temp as ambient temp falls, however that is not something specifically set up in the equations</text_box>
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0.1</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
