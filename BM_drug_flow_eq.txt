@@ -1,0 +1,74 @@
+Colon(t) = Colon(t - dt) + (Flow_3 - Exit2) * dt
+INIT Colon = 0
+
+Flow_3 = DELAY(Upper__Int*C4, Delay_Time_1)
+Exit2 = DELAY(Colon*C5, Delay_Time_2)
+Kidney(t) = Kidney(t - dt) + (Flow_1 + Flow_4 - Exit1) * dt
+INIT Kidney = 0
+
+Flow_1 = DELAY(Stomach*C1, Delay_Time_3)
+Flow_4 = DELAY(Upper__Int*C6, Delay_Time_5)
+
+Exit1 = DELAY(Kidney*C3, Delay_Time_4)
+Stomach(t) = Stomach(t - dt) + (-Flow_1 - Flow_2) * dt
+INIT Stomach = 100
+
+Flow_1 = DELAY(Stomach*C1, Delay_Time_3)
+Flow_2 = DELAY(Stomach*C2, Delay_Time)
+Upper__Int(t) = Upper__Int(t - dt) + (Flow_2 - Flow_3 - Flow_4) * dt
+INIT Upper__Int = 0
+
+Flow_2 = DELAY(Stomach*C2, Delay_Time)
+
+Flow_3 = DELAY(Upper__Int*C4, Delay_Time_1)
+Flow_4 = DELAY(Upper__Int*C6, Delay_Time_5)
+
+C1 = 0.1
+C2 = 0.2
+C3 = 0.3
+C4 = 0.4
+C5 = 0.5
+C6 = 0.6
+Delay_Time = 7
+Delay_Time_1 =2 
+Delay_Time_2 = 3
+Delay_Time_3 = 4
+Delay_Time_4 = 8
+Delay_Time_5 = 9
+
+LIMIT C1 <= 1
+LIMIT C2 <= 1
+LIMIT C3 <= 1
+LIMIT C4 <= 1
+LIMIT C5 <= 1
+LIMIT C6 <= 1
+
+
+LIMIT C1 >= 0
+LIMIT C2 >= 0
+LIMIT C3 >= 0
+LIMIT C4 >= 0
+LIMIT C5 >= 0
+LIMIT C6 >= 0
+
+LIMIT Delay_Time_1 <= 10
+LIMIT Delay_Time_2 <= 10
+LIMIT Delay_Time_3 <= 10
+LIMIT Delay_Time_4 <= 10
+LIMIT Delay_Time_5 <= 10
+LIMIT Delay_Time <= 10
+
+LIMIT Delay_Time >= 0
+LIMIT Delay_Time_1 >= 0
+LIMIT Delay_Time_2 >= 0
+LIMIT Delay_Time_3 >= 0
+LIMIT Delay_Time_4 >= 0
+LIMIT Delay_Time_5 >= 0
+
+LIMIT  Flow_1 <= Stomach/dt
+LIMIT Flow_2 <= Stomach/dt
+LIMIT Flow_3 <= Upper__Int/dt
+LIMIT Flow_4 <= Upper__Int/dt
+
+LIMIT Exit1 <= Kidney/dt
+LIMIT Exit2 <=  Colon/dt

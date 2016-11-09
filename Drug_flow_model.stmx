@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
+    <header>
+        <smile version="1.0" namespace="std, isee" />
+        <name>Drug_flow_model</name>
+        <uuid>e054dd9b-6931-4b0b-833b-b7cd482313a5</uuid>
+        <vendor>isee systems, inc.</vendor>
+        <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
+    </header>
+    <style>
+        <model font-family="Arial" font-size="9" />
+        <interface font-family="Arial" font-size="9" />
+    </style>
+    <sim_specs method="Euler" time_units="Months" isee:pause_after_rates="false" isee:instantaneous_flows="false">
+        <start>0</start>
+        <stop>12</stop>
+        <dt>0.25</dt>
+    </sim_specs>
+    <model_units />
+    <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
+        <isee:window width="1424" height="802" />
+        <isee:security />
+        <isee:print_setup width="570" height="750" />
+    </isee:prefs>
+    <isee:equation_prefs order_by="module" />
+    <model>
+        <stock name="Stomach">
+            <eqn>100</eqn>
+            <outflow>Flow_1</outflow>
+            <outflow>Flow_2</outflow>
+            <non_negative />
+            <display x="110" y="221" color="blue" />
+        </stock>
+        <stock name="Kidney">
+            <eqn>0</eqn>
+            <inflow>Flow_1</inflow>
+            <inflow>Flow_4</inflow>
+            <outflow>Exit1</outflow>
+            <non_negative />
+            <display x="317" y="143" color="blue" />
+        </stock>
+        <flow name="Flow_1">
+            <eqn>DELAY(Stomach*C1, Delay_Time_3)</eqn>
+            <non_negative />
+            <display x="203" y="140" color="blue">
+                <pts>
+                    <pt x="111" y="204" />
+                    <pt x="111" y="140" />
+                    <pt x="295" y="140" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="Upper__Int">
+            <eqn>0</eqn>
+            <inflow>Flow_2</inflow>
+            <outflow>Flow_3</outflow>
+            <outflow>Flow_4</outflow>
+            <non_negative />
+            <display x="323" y="343" color="blue" />
+        </stock>
+        <flow name="Flow_2">
+            <eqn>DELAY(Stomach*C2, Delay_Time)</eqn>
+            <non_negative />
+            <display x="206" y="340" color="blue" label_side="right" label_angle="25">
+                <pts>
+                    <pt x="111" y="238" />
+                    <pt x="111" y="340" />
+                    <pt x="301" y="340" />
+                </pts>
+            </display>
+        </flow>
+        <stock name="Colon">
+            <eqn>0</eqn>
+            <inflow>Flow_3</inflow>
+            <outflow>Exit2</outflow>
+            <non_negative />
+            <display x="596" y="339" color="blue" />
+        </stock>
+        <flow name="Flow_3">
+            <eqn>DELAY(Upper__Int*C4, Delay_Time_1)</eqn>
+            <non_negative />
+            <display x="459" y="342" color="blue">
+                <pts>
+                    <pt x="345" y="342" />
+                    <pt x="574" y="342" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Flow_4">
+            <eqn>DELAY(Upper__Int*C6, Delay_Time_5)</eqn>
+            <non_negative />
+            <display x="324" y="243" color="blue" label_angle="278">
+                <pts>
+                    <pt x="324" y="326" />
+                    <pt x="324" y="160" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Exit1">
+            <eqn>DELAY(Kidney*C3, Delay_Time_4)</eqn>
+            <non_negative />
+            <display x="459" y="126" color="blue" label_side="right" label_angle="80">
+                <pts>
+                    <pt x="339" y="126" />
+                    <pt x="580" y="126" />
+                </pts>
+            </display>
+        </flow>
+        <flow name="Exit2">
+            <eqn>DELAY(Colon*C5, Delay_Time_2)</eqn>
+            <non_negative />
+            <display x="746" y="335" color="blue" label_side="top" label_angle="97">
+                <pts>
+                    <pt x="618" y="335" />
+                    <pt x="874" y="335" />
+                </pts>
+            </display>
+        </flow>
+        <aux name="Delay_Time">
+            <isee:delay_aux />
+            <display x="217" y="419" color="blue" />
+        </aux>
+        <aux name="Delay_Time_1">
+            <isee:delay_aux />
+            <display x="445" y="417" color="blue" />
+        </aux>
+        <aux name="Delay_Time_2">
+            <isee:delay_aux />
+            <display x="788" y="383" color="blue" />
+        </aux>
+        <aux name="Delay_Time_3">
+            <eqn>TIME</eqn>
+            <isee:delay_aux />
+            <gf>
+                <xscale min="0" max="12" />
+                <yscale min="0" max="100" />
+                <ypts>0,0,0,0,0,0,0,0,0,0,0,0,0</ypts>
+            </gf>
+            <display x="232" y="98" color="blue" label_side="top" label_angle="52" />
+        </aux>
+        <aux name="Delay_Time_4">
+            <isee:delay_aux />
+            <display x="512" y="162" color="blue" />
+        </aux>
+        <aux name="C1">
+            <eqn>TIME</eqn>
+            <gf>
+                <xscale min="0" max="12" />
+                <yscale min="0" max="100" />
+                <ypts>0,0,0,0,0,0,0,0,0,0,0,0,0</ypts>
+            </gf>
+            <display x="235" y="172" color="blue" />
+        </aux>
+        <aux name="C2">
+            <display x="153" y="409" color="blue" />
+        </aux>
+        <aux name="C3">
+            <display x="427" y="168" color="blue" />
+        </aux>
+        <aux name="C4">
+            <display x="533" y="402" color="blue" />
+        </aux>
+        <aux name="C5">
+            <display x="721" y="376" color="blue" />
+        </aux>
+        <aux name="Delay_Time_5">
+            <isee:delay_aux />
+            <display x="370" y="216" color="blue" />
+        </aux>
+        <aux name="C6">
+            <display x="368" y="271" color="blue" />
+        </aux>
+        <display page_width="570" page_height="750" page_cols="3" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT">
+            <connector x="88" y="207" uid="0">
+                <from>Stomach</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="132" y="229" uid="1">
+                <from>Stomach</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="220" y="410" uid="2">
+                <from>Delay_Time</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="223" y="99" uid="3">
+                <from>Delay_Time_3</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="503" y="161" uid="4">
+                <from>Delay_Time_4</from>
+                <to>Exit1</to>
+            </connector>
+            <connector x="453" y="421" uid="5">
+                <from>Delay_Time_1</from>
+                <to>Flow_3</to>
+            </connector>
+            <connector x="789" y="374" uid="6">
+                <from>Delay_Time_2</from>
+                <to>Exit2</to>
+            </connector>
+            <connector x="234" y="163" uid="7">
+                <from>C1</from>
+                <to>Flow_1</to>
+            </connector>
+            <connector x="161" y="405" uid="8">
+                <from>C2</from>
+                <to>Flow_2</to>
+            </connector>
+            <connector x="436" y="164" uid="9">
+                <from>C3</from>
+                <to>Exit1</to>
+            </connector>
+            <connector x="729" y="372" uid="10">
+                <from>C5</from>
+                <to>Exit2</to>
+            </connector>
+            <connector x="533" y="393" uid="11">
+                <from>C4</from>
+                <to>Flow_3</to>
+            </connector>
+            <connector x="361" y="215" uid="12">
+                <from>Delay_Time_5</from>
+                <to>Flow_4</to>
+            </connector>
+            <connector x="365" y="263" uid="13">
+                <from>C6</from>
+                <to>Flow_4</to>
+            </connector>
+            <connector x="340" y="126" uid="14">
+                <from>Kidney</from>
+                <to>Exit1</to>
+            </connector>
+            <connector x="617" y="328" uid="15">
+                <from>Colon</from>
+                <to>Exit2</to>
+            </connector>
+            <connector x="345" y="329" uid="16">
+                <from>Upper__Int</from>
+                <to>Flow_3</to>
+            </connector>
+            <connector x="312" y="325" uid="17">
+                <from>Upper__Int</from>
+                <to>Flow_4</to>
+            </connector>
+            <text_box x="922" y="56" uid="18" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="363" height="155">Matt Grobelny HW5&#x0D;Stella &#x0D;&#x0D;14 constants in this model&#x0D;0&lt;C1 &lt; 1&#x0D;&#x0D;0&lt; Delay &lt; 10</text_box>
+            <style font-family="Arial" font-size="9" />
+        </display>
+        <interface page_width="788" page_height="528">
+            <simulation_delay>0.1</simulation_delay>
+            <style font-family="Arial" font-size="9" />
+        </interface>
+        <style font-family="Arial" font-size="9" />
+    </model>
+</xmile>
