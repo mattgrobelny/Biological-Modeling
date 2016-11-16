@@ -2,7 +2,7 @@
 <xmile version="1.0" level="3" xmlns="http://www.systemdynamics.org/XMILE" xmlns:isee="http://iseesystems.com/XMILE">
     <header>
         <smile version="1.0" namespace="std, isee" />
-        <name>cohort_pop_model</name>
+        <name>cohort_pop_model_no_migration</name>
         <uuid>abe0a9e4-42d3-4967-901a-6cf849383afd</uuid>
         <vendor>isee systems, inc.</vendor>
         <product version="10.1" isee:saved_by_v1="false" lang="en">STELLA</product>
