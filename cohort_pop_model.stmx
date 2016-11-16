@@ -18,9 +18,9 @@
     </sim_specs>
     <model_units />
     <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
-        <isee:window width="1904" height="982" />
+        <isee:window width="1440" height="818" />
         <isee:security />
-        <isee:print_setup width="612" height="792" />
+        <isee:print_setup width="570" height="750" />
     </isee:prefs>
     <isee:equation_prefs order_by="module" />
     <model>
@@ -47,16 +47,15 @@
             <eqn>TIME</eqn>
             <gf>
                 <yscale min="0" max="100" />
-                <xpts>1960,1961,1962,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010</xpts>
-                <ypts>3.6539999999999999,3.6200000000000001,3.4609999999999999,3.319,3.1899999999999999,2.9129999999999998,2.7210000000000001,2.5579999999999998,2.464,2.456,2.48,2.266,2.0099999999999998,1.879,1.835,1.774,1.738,1.79,1.76,1.8080000000000001,1.8394999999999999,1.8120000000000001,1.8274999999999999,1.7989999999999999,1.8065,1.8440000000000001,1.8374999999999999,1.8720000000000001,1.9339999999999999,2.0139999999999998,2.081,2.0625,2.0459999999999998,2.0194999999999999,2.0015000000000001,1.978,1.976,1.9710000000000001,1.9990000000000001,2.0074999999999998,2.056,2.0305,2.0205000000000002,2.0474999999999999,2.0514999999999999,2.0569999999999999,2.1080000000000001,2.1200000000000001,2.0720000000000001,2.0019999999999998,1.931</ypts>
+                <xpts>1950,1960,1970,1980,1990,2000,2010</xpts>
+                <ypts>0.024,0.023,0.017999999999999999,0.016,0.017000000000000001,0.014999999999999999,0.014</ypts>
             </gf>
-            <units>births per woman</units>
+            <units>percent births per woman</units>
             <display x="125" y="42" color="blue" />
         </aux>
         <flow name="Flow_1">
-            <eqn>Age:_Under_5</eqn>
+            <eqn>Age:_Under_5*.2</eqn>
             <non_negative />
-            <multiplier>0.5</multiplier>
             <display x="243" y="299" color="blue">
                 <pts>
                     <pt x="179" y="157" />
@@ -65,28 +64,8 @@
                 </pts>
             </display>
         </flow>
-        <aux name="Avg_Life_Span">
-            <eqn>TIME</eqn>
-            <gf>
-                <yscale min="0" max="100" />
-                <xpts>1950,1960,1970,1980,1990,2000,2010</xpts>
-                <ypts>68.200000000000003,69.700000000000003,70.799999999999997,73.700000000000003,75.400000000000006,77,78.700000000000003</ypts>
-            </gf>
-            <display x="1855" y="2310" color="blue" label_side="top" label_angle="135" />
-        </aux>
-        <flow name="Flow_4">
-            <eqn>Age:_85_and_over* 1/(Avg_Life_Span-65)</eqn>
-            <non_negative />
-            <display x="1955" y="2239" color="blue" label_side="right" label_angle="28">
-                <pts>
-                    <pt x="1770" y="2085" />
-                    <pt x="1770" y="2239" />
-                    <pt x="2141" y="2239" />
-                </pts>
-            </display>
-        </flow>
         <flow name="Death_Age:_Under_5">
-            <eqn>Age:_Under_5/100000*Death_Rate_Age:_Under_5</eqn>
+            <eqn>Age:_Under_5*Death_Rate_Age:_Under_5/100000</eqn>
             <non_negative />
             <display x="362" y="147" color="blue">
                 <pts>
@@ -96,7 +75,7 @@
             </display>
         </flow>
         <flow name="Death_Age:_5_to_14">
-            <eqn>Age:_5_to_14/100000*Death_Rate_Age:_5_to_14*10</eqn>
+            <eqn>Age:_5_to_14*Death_Rate_Age:_5_to_14/100000</eqn>
             <non_negative />
             <display x="473" y="304" color="blue">
                 <pts>
@@ -107,8 +86,8 @@
         </flow>
         <aux name="Death_Rate_Age:_Under_5">
             <eqn>TIME</eqn>
-            <gf>
-                <yscale min="0" max="1" />
+            <gf type="extrapolate">
+                <yscale min="0" max="30000" />
                 <xpts>1950,1960,1970,1980,1990,2000,2010</xpts>
                 <ypts>3439,2806,2227,1353,1019,761,713</ypts>
             </gf>
@@ -140,8 +119,8 @@
             <eqn>TIME</eqn>
             <gf>
                 <yscale min="0" max="100" />
-                <xpts>1950,1960,1970,1980,1990,2000,2010</xpts>
-                <ypts>250000,265000,373000,524000,1536000,841000,1042000</ypts>
+                <xpts>1950,1951,1952,1953,1954,1955,1956,1957,1958,1959,1960,1961,1962,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010</xpts>
+                <ypts>249187,205717,265520,170434,208177,237790,321625,326867,253265,260686,265398,271344,283763,306260,292248,296697,323040,361972,454448,358579,373326,370478,384685,398515,393919,385378,499093,458755,589810,394244,524295,595014,533624,550052,541811,568149,600027,599889,641346,1090172,1535872,1826595,973445,903916,803993,720177,915560,797847,653206,644787,841002,1058902,1059356,703542,957883,1122257,1266129,1052415,1107126,1130818,1042625</ypts>
             </gf>
             <display x="768" y="43" color="blue" label_side="top" label_angle="45" />
         </aux>
@@ -155,9 +134,8 @@
             <display x="524" y="517" color="blue" />
         </stock>
         <flow name="Flow_5">
-            <eqn>Age:_5_to_14</eqn>
+            <eqn>Age:_5_to_14*.1</eqn>
             <non_negative />
-            <multiplier>0.5</multiplier>
             <display x="419" y="500" color="blue">
                 <pts>
                     <pt x="336" y="325" />
@@ -167,9 +145,8 @@
             </display>
         </flow>
         <flow name="Flow_6">
-            <eqn>Age:_15_to_24</eqn>
+            <eqn>Age:_15_to_24*.1</eqn>
             <non_negative />
-            <multiplier>0.5</multiplier>
             <display x="588" y="716" color="blue" label_angle="277">
                 <pts>
                     <pt x="521" y="534" />
@@ -209,9 +186,8 @@
             <display x="677" y="733" color="blue" />
         </stock>
         <flow name="Flow_2">
-            <eqn>Age:_25_to_34</eqn>
+            <eqn>Age:_25_to_34*.1</eqn>
             <non_negative />
-            <multiplier>0.5</multiplier>
             <display x="725" y="981" color="blue" label_angle="287">
                 <pts>
                     <pt x="674" y="750" />
@@ -251,9 +227,8 @@
             <display x="799" y="995" color="blue" />
         </stock>
         <flow name="Flow_9">
-            <eqn>Age:_35_to_44</eqn>
+            <eqn>Age:_35_to_44*.1</eqn>
             <non_negative />
-            <multiplier>0.5</multiplier>
             <display x="868" y="1207" color="blue" label_angle="274">
                 <pts>
                     <pt x="796" y="1012" />
@@ -293,9 +268,8 @@
             <display x="962" y="1213" color="blue" />
         </stock>
         <flow name="Flow_11">
-            <eqn>Age:_45_to_54</eqn>
+            <eqn>Age:_45_to_54*.1</eqn>
             <non_negative />
-            <multiplier>0.5</multiplier>
             <display x="1032" y="1400" color="blue" label_angle="274">
                 <pts>
                     <pt x="959" y="1230" />
@@ -359,8 +333,8 @@
             <eqn>500000</eqn>
             <inflow>Immigration_Age:_85_and_over</inflow>
             <inflow>Flow_19</inflow>
+            <outflow>Deaths_Age:_85_and_over</outflow>
             <outflow>Flow_4</outflow>
-            <outflow>Deaths_Age:_78_and_over</outflow>
             <non_negative />
             <display x="1761" y="2068" color="blue" />
         </stock>
@@ -430,9 +404,8 @@
             <display x="1329" y="1334" color="blue" label_side="top" label_angle="41" />
         </aux>
         <flow name="Flow_14">
-            <eqn>Age:_55_to_64</eqn>
+            <eqn>Age:_55_to_64*.1</eqn>
             <non_negative />
-            <multiplier>0.5</multiplier>
             <display x="1211" y="1625" color="blue" label_angle="274">
                 <pts>
                     <pt x="1138" y="1427" />
@@ -451,9 +424,8 @@
             <display x="1306" y="1642" color="blue" />
         </stock>
         <flow name="Flow_15">
-            <eqn>Age:_65_to_74</eqn>
+            <eqn>Age:_65_to_74*.1</eqn>
             <non_negative />
-            <multiplier>0.5</multiplier>
             <display x="1409" y="1842" color="blue" label_angle="274">
                 <pts>
                     <pt x="1312" y="1659" />
@@ -484,7 +456,7 @@
             </display>
         </flow>
         <stock name="Age:_75_to_84">
-            <eqn>4000000</eqn>
+            <eqn>3000000</eqn>
             <inflow>Immigration_Age:_55_to_67</inflow>
             <inflow>Flow_15</inflow>
             <outflow>Flow_19</outflow>
@@ -493,9 +465,8 @@
             <display x="1529" y="1850" color="blue" />
         </stock>
         <flow name="Flow_19">
-            <eqn>Age:_75_to_84</eqn>
+            <eqn>Age:_75_to_84*.1</eqn>
             <non_negative />
-            <multiplier>0.5</multiplier>
             <display x="1636" y="2057" color="blue" label_angle="274">
                 <pts>
                     <pt x="1533" y="1867" />
@@ -505,7 +476,7 @@
             </display>
         </flow>
         <flow name="Deaths_Age:_75_to_84">
-            <eqn>Age:_75_to_84*Death_Rate_Age:_75_to_84 /100000</eqn>
+            <eqn>Age:_75_to_84*Death_Rate_Age:_75_to_84/100000</eqn>
             <non_negative />
             <display x="1677" y="1834" color="blue">
                 <pts>
@@ -546,10 +517,10 @@
         <aux name="Total_Population_of_Model">
             <eqn>Age:_15_to_24 + Age:_25_to_34 + Age:_35_to_44 + Age:_45_to_54 + Age:_55_to_64 + Age:_5_to_14 + Age:_65_to_74 + Age:_75_to_84 + Age:_85_and_over + Age:_Under_5</eqn>
             <isee:summing />
-            <display x="996" y="29" color="blue" />
+            <display x="737" y="108" color="blue" label_side="top" label_angle="31" />
         </aux>
-        <flow name="Deaths_Age:_78_and_over">
-            <eqn>Age:_85_and_over*Converter_13 /100000</eqn>
+        <flow name="Deaths_Age:_85_and_over">
+            <eqn>Age:_85_and_over*Death_Rate_Age:_85_and_over/100000</eqn>
             <non_negative />
             <display x="1953" y="2066" color="blue">
                 <pts>
@@ -558,17 +529,17 @@
                 </pts>
             </display>
         </flow>
-        <aux name="Converter_13">
+        <aux name="Death_Rate_Age:_85_and_over">
             <eqn>TIME</eqn>
             <gf>
                 <yscale min="0" max="100" />
                 <xpts>1950,1960,1970,1980,1990,2000,2010</xpts>
                 <ypts>20196,19857,16344,15980,15327,15321,12946</ypts>
             </gf>
-            <display x="1982" y="2002" color="blue" />
+            <display x="1982" y="2002" color="blue" label_side="top" label_angle="26" />
         </aux>
         <aux name="Total_pop_Age_15_to_44">
-            <eqn>Age:_15_to_24 + Age:_25_to_34 + Age:_35_to_44 + Age:_5_to_14</eqn>
+            <eqn>Age:_15_to_24 + Age:_25_to_34 + Age:_35_to_44</eqn>
             <isee:summing />
             <display x="81" y="32" color="blue" label_side="top" label_angle="103" />
         </aux>
@@ -583,79 +554,114 @@
                 </pts>
             </display>
         </flow>
-        <aux name="Actual_total_Population">
+        <aux name="Actual_total_Population_in_millions">
             <eqn>TIME</eqn>
             <gf>
                 <yscale min="0" max="100" />
                 <xpts>1950,1960,1970,1980,1990,2000,2010</xpts>
                 <ypts>146.5,176.90000000000001,198.5,221.19999999999999,244,280,306</ypts>
             </gf>
-            <display x="1167" y="35" color="blue" />
+            <display x="963" y="61" color="blue" label_side="top" label_angle="47" />
         </aux>
-        <display page_width="612" page_height="792" page_cols="5" page_rows="4" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT" scroll_x="1034">
-            <alias x="32" y="326" uid="0">
+        <flow name="Model_Pop_vs_Actual_Percent_diff">
+            <eqn>(Total_Population_of_Model-Actual)/Actual*100</eqn>
+            <precision>max</precision>
+            <display x="837" y="149" color="blue" label_angle="209">
+                <pts>
+                    <pt x="702" y="149" />
+                    <pt x="973" y="149" />
+                </pts>
+                <format precision="max" />
+            </display>
+        </flow>
+        <aux name="Actual">
+            <eqn>Actual_total_Population_in_millions*1000000</eqn>
+            <display x="908" y="98" color="blue" />
+        </aux>
+        <aux name="Avg_Life_Span">
+            <eqn>TIME</eqn>
+            <gf>
+                <yscale min="0" max="100" />
+                <xpts>1950,1960,1970,1980,1990,2000,2010</xpts>
+                <ypts>68.200000000000003,69.700000000000003,70.799999999999997,73.700000000000003,75.400000000000006,77,78.700000000000003</ypts>
+            </gf>
+            <display x="1888" y="2363" color="blue" label_side="top" label_angle="135" />
+        </aux>
+        <flow name="Flow_4">
+            <eqn>Age:_85_and_over* 1/(Avg_Life_Span-65)</eqn>
+            <non_negative />
+            <display x="1973" y="2292" color="blue" label_side="right" label_angle="28">
+                <pts>
+                    <pt x="1773" y="2085" />
+                    <pt x="1773" y="2292" />
+                    <pt x="2174" y="2292" />
+                </pts>
+            </display>
+        </flow>
+        <display page_width="570" page_height="750" page_cols="5" page_rows="4" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT" scroll_x="23">
+            <connector x="954" y="63" uid="0">
+                <from>Actual_total_Population_in_millions</from>
+                <to>Actual</to>
+            </connector>
+            <alias x="32" y="326" uid="1">
                 <of>Immigration</of>
             </alias>
-            <alias x="392" y="719" uid="1">
+            <alias x="392" y="719" uid="2">
                 <of>Immigration</of>
             </alias>
-            <alias x="697" y="1193" uid="2">
+            <alias x="697" y="1193" uid="3">
                 <of>Immigration</of>
             </alias>
-            <alias x="1033" y="1619" uid="3">
+            <alias x="1033" y="1619" uid="4">
                 <of>Immigration</of>
             </alias>
-            <alias x="1343" y="2041" uid="4">
+            <alias x="1343" y="2041" uid="5">
                 <of>Immigration</of>
             </alias>
-            <alias x="32" y="400" uid="5">
+            <alias x="32" y="400" uid="6">
                 <of>Total_Population_of_Model</of>
             </alias>
-            <alias x="309" y="774" uid="6">
+            <alias x="309" y="774" uid="7">
                 <of>Total_Population_of_Model</of>
             </alias>
-            <alias x="609" y="1230" uid="7">
+            <alias x="609" y="1230" uid="8">
                 <of>Total_Population_of_Model</of>
             </alias>
-            <alias x="952" y="1664" uid="8">
+            <alias x="952" y="1664" uid="9">
                 <of>Total_Population_of_Model</of>
             </alias>
-            <alias x="1372" y="2100" uid="9">
+            <alias x="1372" y="2100" uid="10">
                 <of>Total_Population_of_Model</of>
             </alias>
-            <connector x="1150" y="1410" uid="10">
+            <connector x="1150" y="1410" uid="11">
                 <from>Age:_55_to_64</from>
                 <to>Flow_14</to>
             </connector>
-            <connector x="1783" y="2059" uid="11">
+            <connector x="1783" y="2059" uid="12">
                 <from>Age:_85_and_over</from>
-                <to>Deaths_Age:_78_and_over</to>
+                <to>Deaths_Age:_85_and_over</to>
             </connector>
-            <connector x="351" y="319" uid="12">
+            <connector x="351" y="319" uid="13">
                 <from>Age:_5_to_14</from>
                 <to>Flow_5</to>
             </connector>
-            <connector x="1783" y="2083" uid="13">
-                <from>Age:_85_and_over</from>
-                <to>Flow_4</to>
+            <connector x="900" y="103" uid="14">
+                <from>Actual</from>
+                <to>Model_Pop_vs_Actual_Percent_diff</to>
             </connector>
-            <connector x="75" y="38" uid="14">
+            <connector x="75" y="38" uid="15">
                 <from>Total_pop_Age_15_to_44</from>
                 <to>birthing</to>
             </connector>
-            <connector x="183" y="157" uid="15">
+            <connector x="183" y="157" uid="16">
                 <from>Age:_Under_5</from>
                 <to>Flow_1</to>
-            </connector>
-            <connector x="1862" y="2316" uid="16">
-                <from>Avg_Life_Span</from>
-                <to>Flow_4</to>
             </connector>
             <connector x="306" y="312" uid="17">
                 <from>Age:_5_to_14</from>
                 <to>Immigration_Age:_5_to_14</to>
             </connector>
-            <connector x="184" y="129" uid="18">
+            <connector x="185" y="126" uid="18">
                 <from>Age:_Under_5</from>
                 <to>Death_Age:_Under_5</to>
             </connector>
@@ -663,7 +669,7 @@
                 <from>Death_Rate_Age:_Under_5</from>
                 <to>Death_Age:_Under_5</to>
             </connector>
-            <connector x="140" y="154" uid="20">
+            <connector x="141" y="154" uid="20">
                 <from>Age:_Under_5</from>
                 <to>Imigration:_Age:_Under_5</to>
             </connector>
@@ -679,11 +685,11 @@
                 <from>Age:_25_to_34</from>
                 <to>Immigration_Age:_25_to_34</to>
             </connector>
-            <connector x="700" y="751" uid="24">
+            <connector x="699" y="750" uid="24">
                 <from>Age:_25_to_34</from>
                 <to>Flow_2</to>
             </connector>
-            <connector x="941" y="1217" uid="25">
+            <connector x="939" y="1217" uid="25">
                 <from>Age:_45_to_54</from>
                 <to>Immigration_Age:_45_to_54</to>
             </connector>
@@ -691,11 +697,11 @@
                 <from>Age:_55_to_64</from>
                 <to>Immigration_Age:_55_to_64</to>
             </connector>
-            <connector x="1741" y="2078" uid="27">
+            <connector x="1737" y="2080" uid="27">
                 <from>Age:_85_and_over</from>
                 <to>Immigration_Age:_85_and_over</to>
             </connector>
-            <connector x="821" y="1013" uid="28">
+            <connector x="819" y="1012" uid="28">
                 <from>Age:_35_to_44</from>
                 <to>Flow_9</to>
             </connector>
@@ -703,7 +709,7 @@
                 <from>Age:_45_to_54</from>
                 <to>Flow_11</to>
             </connector>
-            <connector x="1283" y="1646" uid="30">
+            <connector x="1284" y="1648" uid="30">
                 <from>Age:_65_to_74</from>
                 <to>Immigration_Age:_55_to_65</to>
             </connector>
@@ -735,7 +741,7 @@
                 <from>Death_Rate_Age:_25_to_34</from>
                 <to>Death_Age:_25_to_34</to>
             </connector>
-            <connector x="723" y="451" uid="38">
+            <connector x="722" y="450" uid="38">
                 <from>Death_Rate_Age:_15_to_24</from>
                 <to>Death_Age:_15_to_24</to>
             </connector>
@@ -743,11 +749,11 @@
                 <from>Age:_15_to_24</from>
                 <to>Death_Age:_15_to_24</to>
             </connector>
-            <connector x="700" y="719" uid="40">
+            <connector x="699" y="716" uid="40">
                 <from>Age:_25_to_34</from>
                 <to>Death_Age:_25_to_34</to>
             </connector>
-            <connector x="823" y="989" uid="41">
+            <connector x="822" y="989" uid="41">
                 <from>Age:_35_to_44</from>
                 <to>Deaths_Age:_35_to_44</to>
             </connector>
@@ -759,7 +765,7 @@
                 <from>Death_Rate_Age:_5_to_14</from>
                 <to>Death_Age:_5_to_14</to>
             </connector>
-            <connector x="1507" y="1853" uid="44">
+            <connector x="1509" y="1853" uid="44">
                 <from>Age:_75_to_84</from>
                 <to>Immigration_Age:_55_to_67</to>
             </connector>
@@ -785,37 +791,37 @@
             </connector>
             <connector x="1352" y="2041" uid="50">
                 <from>
-                    <alias uid="4" />
+                    <alias uid="5" />
                 </from>
                 <to>Immigration_Age:_85_and_over</to>
             </connector>
             <connector x="1352" y="2041" uid="51">
                 <from>
-                    <alias uid="4" />
+                    <alias uid="5" />
                 </from>
                 <to>Immigration_Age:_55_to_67</to>
             </connector>
             <connector x="1041" y="1620" uid="52">
                 <from>
-                    <alias uid="3" />
+                    <alias uid="4" />
                 </from>
                 <to>Immigration_Age:_55_to_65</to>
             </connector>
             <connector x="1025" y="1613" uid="53">
                 <from>
-                    <alias uid="3" />
+                    <alias uid="4" />
                 </from>
                 <to>Immigration_Age:_55_to_64</to>
             </connector>
             <connector x="706" y="1193" uid="54">
                 <from>
-                    <alias uid="2" />
+                    <alias uid="3" />
                 </from>
                 <to>Immigration_Age:_45_to_54</to>
             </connector>
             <connector x="697" y="1184" uid="55">
                 <from>
-                    <alias uid="2" />
+                    <alias uid="3" />
                 </from>
                 <to>Immigration_Age:_35_to_44</to>
             </connector>
@@ -825,85 +831,85 @@
             </connector>
             <connector x="394" y="709" uid="57">
                 <from>
-                    <alias uid="1" />
+                    <alias uid="2" />
                 </from>
                 <to>Immigration_Age:_15_to_24</to>
             </connector>
             <connector x="401" y="719" uid="58">
                 <from>
-                    <alias uid="1" />
+                    <alias uid="2" />
                 </from>
                 <to>Immigration_Age:_25_to_34</to>
             </connector>
             <connector x="39" y="321" uid="59">
                 <from>
-                    <alias uid="0" />
+                    <alias uid="1" />
                 </from>
                 <to>Imigration:_Age:_Under_5</to>
             </connector>
             <connector x="42" y="324" uid="60">
                 <from>
-                    <alias uid="0" />
+                    <alias uid="1" />
                 </from>
                 <to>Immigration_Age:_5_to_14</to>
             </connector>
             <connector x="1384" y="2097" uid="61">
                 <from>
-                    <alias uid="9" />
+                    <alias uid="10" />
                 </from>
                 <to>Immigration_Age:_85_and_over</to>
             </connector>
             <connector x="1378" y="2095" uid="62">
                 <from>
-                    <alias uid="9" />
+                    <alias uid="10" />
                 </from>
                 <to>Immigration_Age:_55_to_67</to>
             </connector>
-            <connector x="959" y="1661" uid="63">
+            <connector x="961" y="1660" uid="63">
                 <from>
-                    <alias uid="8" />
+                    <alias uid="9" />
                 </from>
                 <to>Immigration_Age:_55_to_65</to>
             </connector>
-            <connector x="951" y="1655" uid="64">
+            <connector x="950" y="1652" uid="64">
                 <from>
-                    <alias uid="8" />
+                    <alias uid="9" />
                 </from>
                 <to>Immigration_Age:_55_to_64</to>
             </connector>
             <connector x="617" y="1235" uid="65">
                 <from>
-                    <alias uid="7" />
+                    <alias uid="8" />
                 </from>
                 <to>Immigration_Age:_45_to_54</to>
             </connector>
             <connector x="613" y="1224" uid="66">
                 <from>
-                    <alias uid="7" />
+                    <alias uid="8" />
                 </from>
                 <to>Immigration_Age:_35_to_44</to>
             </connector>
             <connector x="319" y="771" uid="67">
                 <from>
-                    <alias uid="6" />
+                    <alias uid="7" />
                 </from>
                 <to>Immigration_Age:_15_to_24</to>
             </connector>
             <connector x="317" y="769" uid="68">
                 <from>
-                    <alias uid="6" />
+                    <alias uid="7" />
                 </from>
                 <to>Immigration_Age:_25_to_34</to>
             </connector>
-            <connector x="36" y="394" uid="69">
+            <connector x="37" y="393" uid="69">
                 <from>
-                    <alias uid="5" />
+                    <alias uid="6" />
                 </from>
                 <to>Imigration:_Age:_Under_5</to>
             </connector>
             <connector x="35" y="392" uid="70">
                 <from>
-                    <alias uid="5" />
+                    <alias uid="6" />
                 </from>
                 <to>Immigration_Age:_5_to_14</to>
             </connector>
@@ -912,29 +918,79 @@
                 <to>birthing</to>
             </connector>
             <connector x="1973" y="2000" uid="72">
-                <from>Converter_13</from>
-                <to>Deaths_Age:_78_and_over</to>
+                <from>Death_Rate_Age:_85_and_over</from>
+                <to>Deaths_Age:_85_and_over</to>
             </connector>
-            <stacked_container x="1493" y="53" height="316" width="561" uid="73">
-                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-16T09:48:56Z" time_precision="2" from="1950" to="2030">
-                    <plot index="0" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
-                        <entity name="Deaths_Age:_35_to_44" />
-                    </plot>
-                    <plot index="1" pen_width="1" color="blue" precision="max" show_y_axis="true">
+            <connector x="747" y="108" uid="73">
+                <from>Total_Population_of_Model</from>
+                <to>Model_Pop_vs_Actual_Percent_diff</to>
+            </connector>
+            <connector x="1895" y="2370" uid="74">
+                <from>Avg_Life_Span</from>
+                <to>Flow_4</to>
+            </connector>
+            <connector x="1782" y="2085" uid="75">
+                <from>Age:_85_and_over</from>
+                <to>Flow_4</to>
+            </connector>
+            <stacked_container x="1493" y="53" height="316" width="561" uid="76">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-16T12:41:37Z" time_precision="2" from="1950" to="2030">
+                    <plot index="0" pen_width="1" color="blue" precision="max" show_y_axis="true">
                         <entity name="birthing" />
                     </plot>
-                </graph>
-            </stacked_container>
-            <pad_icon x="1403" y="42" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="73" />
-            <stacked_container x="1485" y="438" height="336" width="593" uid="74">
-                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-16T09:49:16Z" time_precision="2" from="1950" to="1990">
-                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
-                        <entity name="Total_Population_of_Model" />
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <entity name="Total_pop_Age_15_to_44" />
                     </plot>
                 </graph>
             </stacked_container>
-            <pad_icon x="1404" y="104" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="74" />
-            <text_box x="1012" y="92" uid="75" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="355" height="519">Mateusz Grobelny                   IB491                               10.31.16&#x0D;&#x0A;Homework #4&#x0D;&#x0A;GIVEN: Cohort group, death rates of each cohort per 100,000, brithrate from 1950, number of people in each cohort.&#x0D;&#x0D;&#x0A;QUESTION(S):&#x0D;&#x0D;&#x0A;Solution: &#x0D;1) Run model from 1950 1990.  Compare 1990 total with actual and give % difference (+/- 0.5%)&#x0D;&#x0D;2) Extend Deathrate, Brithrate, Immigration Rate, to 2010 by eye.&#x0D; &#x0D;3) Run model compare your 2010 pop est w/ actual give percent difference (+/- 0.5%). &#x0D;&#x0D;On becoming a demographer.... modeling the U.S. population, calibrating and projecting. A two class period assignment. Model of the U.S. population with projections to 2030 1. Form the demographic model of the US population by cohort beginning in 1950 and ending in 1990. Compare your 1990 model value for the total population with that of the census. show the census bureau graph of the population along with yours on the same page. 2. Project by eye all of the Birth rates, death and migration rates to the year 2010, run your model and compare your total population with that of the census. Show your graph and the census graph on the same page. 3. Fill in the actual 1990 and 2010 rate data and run your model and compare as in 1. 4. Project all rates to the year 2030, run your model and compare as in 1 with US Census Bureau mid range projection for 2030. 5. Reduce the migration rates to 0 for the entire 1950 -&gt; 2030 period and compare Census Bureau&apos;s midrange estimate for 2030 to your total in 2030. When making a numerical comparison of pop. totals, give the percentage difference in each case, 1 thru 5.&#x0D;4) Project into 2030, compare total pop to census projection for 2030&#x0D;&#x0D;5) zero out immigration from 1950 to 2030, compare this result to pop model with immigration&#x0D;&#x0D;&#x0D;&#x0A;FURTHER QUESTIONS: &#x0D;&#x0D;&#x0A;ANALOGIES: &#x0D;&#x0D;Make sure units are consistent</text_box>
+            <pad_icon x="1403" y="42" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="76" />
+            <stacked_container x="1485" y="438" height="336" width="593" uid="77">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-16T12:41:37Z" time_precision="2" from="1950" to="2030">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <scale min="0" max="3.5e+008" />
+                        <entity name="Total_Population_of_Model" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="3.5e+008" />
+                        <entity name="Actual" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="1404" y="104" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="77" />
+            <stacked_container x="1481" y="847" height="334" width="591" uid="78">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-16T12:41:37Z" time_precision="2" from="1950" to="2030">
+                    <plot index="0" pen_width="1" color="blue" precision="max" show_y_axis="true">
+                        <entity name="Model_Pop_vs_Actual_Percent_diff" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="1498" y="858" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 3" type="graph" icon_of="78" />
+            <stacked_container x="1823" y="1240" height="282" width="492" uid="79">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-16T12:41:37Z" time_precision="2" from="1950" to="2030">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <scale min="500000" max="2.3e+007" />
+                        <entity name="Age:_15_to_24" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="500000" max="2.3e+007" />
+                        <entity name="Age:_25_to_34" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="500000" max="2.3e+007" />
+                        <entity name="Age:_35_to_44" />
+                    </plot>
+                    <plot index="3" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <scale min="500000" max="2.3e+007" />
+                        <entity name="Age:_45_to_54" />
+                    </plot>
+                    <plot index="4" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <scale min="500000" max="2.3e+007" />
+                        <entity name="Age:_85_and_over" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="1845" y="1256" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 4" type="graph" icon_of="79" />
+            <text_box x="1012" y="92" uid="80" color="black" font-family="Arial" font-size="12" padding="5" border-style="solid" border-width="thin" width="413" height="643">Mateusz Grobelny                   IB491                               10.31.16&#x0D;&#x0A;Homework #4&#x0D;&#x0A;GIVEN: Cohort group, death rates of each cohort per 100,000, brithrate from 1950, number of people in each cohort, number of immigrants per year&#x0D;&#x0D;&#x0A;QUESTION(S):&#x0D;&#x0D;&#x0A;Solution: &#x0D;1) Run model from 1950 1990.  Compare 1990 total with actual and give % difference (+/- 0.5%)&#x0D;&#x0D;2) Extend Deathrate, Brithrate, Immigration Rate, to 2010 by eye.&#x0D; &#x0D;3) Run model compare your 2010 pop est w/ actual give percent difference (+/- 0.5%). &#x0D;&#x0D;On becoming a demographer.... modeling the U.S. population, calibrating and projecting. A two class period assignment. Model of the U.S. population with projections to 2030 1. Form the demographic model of the US population by cohort beginning in 1950 and ending in 1990. Compare your 1990 model value for the total population with that of the census. show the census bureau graph of the population along with yours on the same page. 2. Project by eye all of the Birth rates, death and migration rates to the year 2010, run your model and compare your total population with that of the census. Show your graph and the census graph on the same page. 3. Fill in the actual 1990 and 2010 rate data and run your model and compare as in 1. 4. Project all rates to the year 2030, run your model and compare as in 1 with US Census Bureau mid range projection for 2030. 5. Reduce the migration rates to 0 for the entire 1950 -&gt; 2030 period and compare Census Bureau&apos;s midrange estimate for 2030 to your total in 2030. When making a numerical comparison of pop. totals, give the percentage difference in each case, 1 thru 5.&#x0D;4) Project into 2030, compare total pop to census projection for 2030&#x0D;&#x0D;5) zero out immigration from 1950 to 2030, compare this result to pop model with immigration&#x0D;&#x0D;&#x0D;&#x0A;FURTHER QUESTIONS: &#x0D;&#x0D;&#x0A;ANALOGIES: &#x0D;&#x0D;Make sure units are consistent</text_box>
             <style font-family="Arial" font-size="12" />
         </display>
         <interface page_width="788" page_height="528">
