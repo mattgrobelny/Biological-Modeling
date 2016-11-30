@@ -23,6 +23,12 @@
             <alias>cm</alias>
         </units>
     </model_units>
+    <isee:sensi_specs run="true" runs="5">
+        <method>multivariate</method>
+        <isee:variable max="29000" min="13000" type="incremental" name="Altitude">
+            <num_samples>4</num_samples>
+        </isee:variable>
+    </isee:sensi_specs>
     <isee:prefs last_model="true" layer="model" grid_width="20" grid_height="50" divide_by_zero_alert="true" hide_taskbar="true" show_module_prefix="true">
         <isee:window width="1424" height="802" />
         <isee:security />
@@ -58,8 +64,8 @@
             <display x="228" y="198" color="blue" label_angle="291" />
         </aux>
         <aux name="Altitude">
-            <eqn>0</eqn>
-            <display x="159" y="180" color="blue" />
+            <eqn>29000</eqn>
+            <display x="161" y="385" color="blue" />
         </aux>
         <flow name="Exhaling">
             <eqn>DELAY(Breath_depth/Total_Lung_Cap_vol*Oxygen_in_the_Lung, Breathing_rate)</eqn>
@@ -101,7 +107,7 @@
             <display x="493" y="66" color="blue" />
         </aux>
         <aux name="Breathing_rate">
-            <eqn>20*(1/Activity_Multiplier) { Time between breaths (seconds)}</eqn>
+            <eqn>20{ Time between breaths (seconds)}</eqn>
             <display x="412" y="274" color="blue" label_angle="206" />
         </aux>
         <aux name="Breath_depth">
@@ -128,7 +134,7 @@
             <display x="329" y="557" color="blue" />
         </stock>
         <flow name="Deoxygenation">
-            <eqn>Oxygenated_Blood-(Activity_Multiplier*Basal_Oxygen_Usage)</eqn>
+            <eqn>Oxygenated_Blood-(Basal_Oxygen_Usage)</eqn>
             <non_negative />
             <display x="240" y="556" color="blue" label_side="top" label_angle="86">
                 <pts>
@@ -137,15 +143,6 @@
                 </pts>
             </display>
         </flow>
-        <aux name="Activity_Multiplier">
-            <eqn>Altitude</eqn>
-            <gf>
-                <xscale min="0" max="29000" />
-                <yscale min="0.5" max="2" />
-                <ypts>0.5,2</ypts>
-            </gf>
-            <display x="177" y="652" color="blue" label_side="left" label_angle="164" />
-        </aux>
         <stock name="Deoxygenated_Blood">
             <eqn>45 {mmHg}</eqn>
             <inflow>Deoxygenation</inflow>
@@ -207,123 +204,101 @@
             <eqn>SDOB/TIME</eqn>
             <display x="730" y="647" color="blue" />
         </aux>
-        <display page_width="570" page_height="750" page_cols="3" page_rows="3" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT" scroll_y="8">
-            <alias x="206" y="696" uid="0">
-                <of>Altitude</of>
-            </alias>
-            <connector x="162" y="172" uid="1">
+        <display page_width="570" page_height="750" page_cols="3" page_rows="4" isee:converter_size="medium" isee:animate_flows="true" isee:animate_stocks="true" isee:animate_converters="true" interval="DT" scroll_x="138" scroll_y="12">
+            <connector x="158" y="376" uid="0">
                 <from>Altitude</from>
                 <to>PP02</to>
             </connector>
-            <connector x="237" y="195" uid="2">
+            <connector x="238" y="195" uid="1">
                 <from>PP02</from>
                 <to>Breathing_in</to>
             </connector>
-            <connector x="363" y="324" uid="3">
+            <connector x="363" y="324" uid="2">
                 <from>Oxygen_in_the_Lung</from>
                 <to>Exhaling</to>
             </connector>
-            <connector x="141" y="538" uid="4">
+            <connector x="141" y="538" uid="3">
                 <from>Deoxygenated_Blood</from>
                 <to>Deoxy_exit</to>
             </connector>
-            <connector x="322" y="358" uid="5">
+            <connector x="322" y="359" uid="4">
                 <from>Oxygen_in_the_Lung</from>
                 <to>Oxygen_Uptake</to>
             </connector>
-            <connector x="471" y="391" uid="6">
+            <connector x="470" y="391" uid="5">
                 <from>Diffusion_Constant</from>
                 <to>Oxygen_Uptake</to>
             </connector>
-            <connector x="501" y="445" uid="7">
+            <connector x="501" y="445" uid="6">
                 <from>SA_of_the_Lung</from>
                 <to>Oxygen_Uptake</to>
             </connector>
-            <connector x="494" y="514" uid="8">
+            <connector x="493" y="513" uid="7">
                 <from>Thickness_of_Membrane</from>
                 <to>Oxygen_Uptake</to>
             </connector>
-            <connector x="406" y="268" uid="9">
+            <connector x="406" y="268" uid="8">
                 <from>Breathing_rate</from>
                 <to>Breathing_in</to>
             </connector>
-            <connector x="209" y="687" uid="10">
-                <from>
-                    <alias uid="0" />
-                </from>
-                <to>Activity_Multiplier</to>
-            </connector>
-            <connector x="608" y="231" uid="11">
+            <connector x="608" y="232" uid="9">
                 <from>Breath_depth</from>
                 <to>Breathing_in</to>
             </connector>
-            <connector x="576" y="160" uid="12">
+            <connector x="576" y="160" uid="10">
                 <from>Tidal_Vol</from>
                 <to>Breath_depth</to>
             </connector>
-            <connector x="653" y="195" uid="13">
+            <connector x="653" y="195" uid="11">
                 <from>Expiratory_reserve_vol</from>
                 <to>Breath_depth</to>
             </connector>
-            <connector x="518" y="236" uid="14">
+            <connector x="518" y="236" uid="12">
                 <from>Total_Lung_Cap_vol</from>
                 <to>Breathing_in</to>
             </connector>
-            <connector x="421" y="273" uid="15">
+            <connector x="421" y="273" uid="13">
                 <from>Breathing_rate</from>
                 <to>Exhaling</to>
             </connector>
-            <connector x="611" y="247" uid="16">
+            <connector x="612" y="246" uid="14">
                 <from>Breath_depth</from>
                 <to>Exhaling</to>
             </connector>
-            <connector x="525" y="246" uid="17">
+            <connector x="525" y="244" uid="15">
                 <from>Total_Lung_Cap_vol</from>
                 <to>Exhaling</to>
             </connector>
-            <connector x="159" y="539" uid="18">
+            <connector x="160" y="537" uid="16">
                 <from>Deoxygenated_Blood</from>
                 <to>Oxygen_Uptake</to>
             </connector>
-            <connector x="178" y="644" uid="19">
-                <from>Activity_Multiplier</from>
-                <to>Deoxygenation</to>
-            </connector>
-            <connector x="280" y="636" uid="20">
+            <connector x="280" y="636" uid="17">
                 <from>Basal_Oxygen_Usage</from>
                 <to>Deoxygenation</to>
             </connector>
-            <connector x="307" y="546" uid="21">
+            <connector x="307" y="547" uid="18">
                 <from>Oxygenated_Blood</from>
                 <to>Deoxygenation</to>
             </connector>
-            <alias x="478" y="251" uid="22">
-                <of>Activity_Multiplier</of>
-            </alias>
-            <connector x="470" y="247" uid="23">
-                <from>
-                    <alias uid="22" />
-                </from>
-                <to>Breathing_rate</to>
-            </connector>
-            <connector x="351" y="557" uid="24">
+            <connector x="351" y="557" uid="19">
                 <from>Oxygenated_Blood</from>
                 <to>Smooth_Oxy_Blood</to>
             </connector>
-            <connector x="686" y="614" uid="25">
+            <connector x="686" y="614" uid="20">
                 <from>SOB</from>
                 <to>Smooth_avg_Oxy</to>
             </connector>
-            <connector x="174" y="562" uid="26">
+            <connector x="174" y="562" uid="21">
                 <from>Deoxygenated_Blood</from>
                 <to>Smooth_DeOxy_Blood</to>
             </connector>
-            <connector x="688" y="695" uid="27">
+            <connector x="688" y="695" uid="22">
                 <from>SDOB</from>
                 <to>Smoothed_avg_DeOxy</to>
             </connector>
-            <stacked_container x="783" y="26" height="282" width="492" uid="28">
-                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-29T17:29:20Z" time_precision="2" from="1" to="1000">
+            <stacked_container x="783" y="26" height="282" width="492" uid="23">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" time_precision="2" from="1" to="1000">
                     <plot index="0" pen_width="1" color="red" precision="1" show_y_axis="true">
                         <scale min="0" max="160" />
                         <entity name="Hypoxic_Threshold_Oxy_blood" />
@@ -334,25 +309,25 @@
                     </plot>
                 </graph>
             </stacked_container>
-            <pad_icon x="855" y="232" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="28" />
-            <stacked_container x="772" y="373" height="282" width="492" uid="29">
-                <graph type="time_series" title="Oxygen Uptake rate (PPO2 per second)" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-29T17:29:20Z" time_precision="2" from="1" to="1000">
+            <pad_icon x="855" y="232" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 1" type="graph" icon_of="23" />
+            <stacked_container x="772" y="373" height="282" width="492" uid="24">
+                <graph type="time_series" title="Oxygen Uptake rate (PPO2 per second)" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" time_precision="2" from="1" to="1000">
                     <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
                         <entity name="Oxygen_Uptake" />
                     </plot>
                 </graph>
             </stacked_container>
-            <pad_icon x="805" y="390" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="29" />
-            <stacked_container x="774" y="728" height="282" width="492" uid="30">
-                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-29T17:29:20Z" time_precision="2" from="1" to="1000">
+            <pad_icon x="805" y="390" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 2" type="graph" icon_of="24" />
+            <stacked_container x="774" y="728" height="282" width="492" uid="25">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" time_precision="2" from="1" to="1000">
                     <plot index="0" pen_width="1" color="red" precision="1" show_y_axis="true">
                         <entity name="Exhaling" />
                     </plot>
                 </graph>
             </stacked_container>
-            <pad_icon x="796" y="728" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 3" type="graph" icon_of="30" />
-            <stacked_container height="282" width="492" uid="31">
-                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-29T17:29:20Z" time_precision="2" from="1" to="1000">
+            <pad_icon x="796" y="728" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 3" type="graph" icon_of="25" />
+            <stacked_container height="282" width="492" uid="26">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" time_precision="2" from="1" to="1000">
                     <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
                         <scale min="0.451" max="225.89" />
                         <entity name="Oxygenated_Blood" />
@@ -367,21 +342,21 @@
                     </plot>
                 </graph>
             </stacked_container>
-            <pad_icon x="368" y="736" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 4" type="graph" icon_of="31" />
-            <stacked_container height="282" width="492" uid="32">
-                <graph type="time_series" title="PPO2 Breathed in vs Altitude" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-29T17:29:20Z" time_precision="2" from="1" to="1000" />
+            <pad_icon x="368" y="736" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 4" type="graph" icon_of="26" />
+            <stacked_container height="282" width="492" uid="27">
+                <graph type="time_series" title="PPO2 Breathed in vs Altitude" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" time_precision="2" from="1" to="1000" />
             </stacked_container>
-            <pad_icon x="271" y="1084" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 5" type="graph" icon_of="32" />
-            <stacked_container x="781" y="1076" height="282" width="492" uid="33">
-                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-29T17:29:20Z" time_precision="2" from="1" to="1000">
+            <pad_icon x="271" y="1084" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 5" type="graph" icon_of="27" />
+            <stacked_container x="781" y="1076" height="282" width="492" uid="28">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" time_precision="2" from="1" to="1000">
                     <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
                         <entity name="Breathing_in" />
                     </plot>
                 </graph>
             </stacked_container>
-            <pad_icon x="855" y="1085" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 6" type="graph" icon_of="33" />
-            <stacked_container x="124" y="787" height="353" width="621" uid="34">
-                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-29T17:29:20Z" time_precision="2" from="1" to="1000">
+            <pad_icon x="855" y="1085" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 6" type="graph" icon_of="28" />
+            <stacked_container x="124" y="787" height="353" width="621" uid="29">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" time_precision="2" from="1" to="1000">
                     <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
                         <scale min="0" max="107.16" />
                         <entity name="Smooth_avg_Oxy" />
@@ -394,32 +369,639 @@
                         <scale min="0" max="107.16" />
                         <entity name="Hypoxic_Threshold_Oxy_blood" />
                     </plot>
-                    <plot index="3" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
-                        <entity name="Breathing_rate" />
-                    </plot>
                 </graph>
             </stacked_container>
-            <pad_icon x="275" y="1464" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 7" type="graph" icon_of="34" />
-            <stacked_container x="784" y="1436" height="357" width="627" uid="35">
-                <graph type="scatter" title="Oxygenated Blood PPO2 vs " background="#FFFFC9" show_grid="true" plot_numbers="false" isee:use_five_segments="false" date_time="2016-11-29T17:29:20Z" time_precision="2">
+            <pad_icon x="82" y="1158" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 7" type="graph" icon_of="29" />
+            <stacked_container x="784" y="1436" height="357" width="627" uid="30">
+                <graph type="time_series" title="Oxygenated Blood PPO2 vs " background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" comparative="true" time_precision="2" from="1" to="1000">
                     <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
-                        <scale min="30.97" max="120" />
-                        <entity name="Oxygenated_Blood" />
+                        <scale min="0" max="100.15" />
+                        <entity name="Smooth_avg_Oxy" />
+                        <data name="Run 375" />
                     </plot>
                     <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
-                        <entity name="Altitude" />
+                        <scale min="0" max="100.15" />
+                        <entity name="Smooth_avg_Oxy" />
+                        <data name="Run 376" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="0" max="100.15" />
+                        <entity name="Smooth_avg_Oxy" />
+                        <data name="Run 377" />
+                    </plot>
+                    <plot index="3" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <scale min="0" max="100.15" />
+                        <entity name="Smooth_avg_Oxy" />
+                        <data name="Run 378" />
+                    </plot>
+                    <plot index="4" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <scale min="0" max="100.15" />
+                        <entity name="Smooth_avg_Oxy" />
+                        <data name="Run 379" />
+                    </plot>
+                    <plot index="5" pen_width="1" color="#7F00FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="100.15" />
+                        <entity name="Smooth_avg_Oxy" />
+                        <data name="Run 380" />
+                    </plot>
+                    <plot index="6" pen_width="1" color="#0CA0FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="100.15" />
+                        <entity name="Smooth_avg_Oxy" />
+                        <data name="Run 381" />
+                    </plot>
+                    <plot index="7" pen_width="1" color="lime" precision="1" show_y_axis="true">
+                        <scale min="0" max="100.15" />
+                        <entity name="Smooth_avg_Oxy" />
+                        <data name="Run 382" />
+                    </plot>
+                    <plot index="8" pen_width="1" color="#FF007F" precision="1" show_y_axis="true">
+                        <scale min="0" max="100.15" />
+                        <entity name="Smooth_avg_Oxy" />
+                        <data name="Run 383" />
+                    </plot>
+                    <plot index="9" pen_width="1" color="aqua" precision="1" show_y_axis="true">
+                        <scale min="0" max="100.15" />
+                        <entity name="Smooth_avg_Oxy" />
+                        <data name="Run 384" />
                     </plot>
                 </graph>
             </stacked_container>
-            <pad_icon x="948" y="1448" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 8" type="graph" icon_of="35" />
+            <pad_icon x="948" y="1448" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 8" type="graph" icon_of="30" />
+            <stacked_container x="131" y="1256" height="282" width="492" uid="31">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" time_precision="2" from="1" to="1000">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Oxygen_in_the_Lung" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="153" y="1272" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 9" type="graph" icon_of="31" />
+            <stacked_container x="131" y="1586" height="282" width="492" uid="32">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" time_precision="2" from="1" to="1000">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Deoxy_exit" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="153" y="1602" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 10" type="graph" icon_of="32" />
+            <stacked_container height="282" width="492" uid="33">
+                <graph type="scatter" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" comparative="true" time_precision="2">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 335" />
+                    </plot>
+                    <plot index="1" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 335" />
+                    </plot>
+                    <plot index="2" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 336" />
+                    </plot>
+                    <plot index="3" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 336" />
+                    </plot>
+                    <plot index="4" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 337" />
+                    </plot>
+                    <plot index="5" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 337" />
+                    </plot>
+                    <plot index="6" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 338" />
+                    </plot>
+                    <plot index="7" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 338" />
+                    </plot>
+                    <plot index="8" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 339" />
+                    </plot>
+                    <plot index="9" pen_width="1" color="#7F00FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 339" />
+                    </plot>
+                    <plot index="10" pen_width="1" color="#7F00FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 340" />
+                    </plot>
+                    <plot index="11" pen_width="1" color="#0CA0FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 340" />
+                    </plot>
+                    <plot index="12" pen_width="1" color="#0CA0FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 341" />
+                    </plot>
+                    <plot index="13" pen_width="1" color="lime" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 341" />
+                    </plot>
+                    <plot index="14" pen_width="1" color="lime" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 342" />
+                    </plot>
+                    <plot index="15" pen_width="1" color="#FF007F" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 342" />
+                    </plot>
+                    <plot index="16" pen_width="1" color="#FF007F" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 343" />
+                    </plot>
+                    <plot index="17" pen_width="1" color="aqua" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 343" />
+                    </plot>
+                    <plot index="18" pen_width="1" color="aqua" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 344" />
+                    </plot>
+                    <plot index="19" pen_width="1" color="#F586FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 344" />
+                    </plot>
+                    <plot index="20" pen_width="1" color="#F586FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 345" />
+                    </plot>
+                    <plot index="21" pen_width="1" color="black" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 345" />
+                    </plot>
+                    <plot index="22" pen_width="1" color="black" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 346" />
+                    </plot>
+                    <plot index="23" pen_width="1" color="#C8C8C8" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 346" />
+                    </plot>
+                    <plot index="24" pen_width="1" color="#C8C8C8" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 347" />
+                    </plot>
+                    <plot index="25" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 347" />
+                    </plot>
+                    <plot index="26" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 348" />
+                    </plot>
+                    <plot index="27" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 348" />
+                    </plot>
+                    <plot index="28" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 349" />
+                    </plot>
+                    <plot index="29" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 349" />
+                    </plot>
+                    <plot index="30" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 350" />
+                    </plot>
+                    <plot index="31" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 350" />
+                    </plot>
+                    <plot index="32" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 351" />
+                    </plot>
+                    <plot index="33" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 351" />
+                    </plot>
+                    <plot index="34" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 352" />
+                    </plot>
+                    <plot index="35" pen_width="1" color="#7F00FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 352" />
+                    </plot>
+                    <plot index="36" pen_width="1" color="#7F00FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 353" />
+                    </plot>
+                    <plot index="37" pen_width="1" color="#0CA0FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 353" />
+                    </plot>
+                    <plot index="38" pen_width="1" color="#0CA0FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 354" />
+                    </plot>
+                    <plot index="39" pen_width="1" color="lime" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 354" />
+                    </plot>
+                    <plot index="40" pen_width="1" color="lime" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 355" />
+                    </plot>
+                    <plot index="41" pen_width="1" color="#FF007F" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 355" />
+                    </plot>
+                    <plot index="42" pen_width="1" color="#FF007F" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 356" />
+                    </plot>
+                    <plot index="43" pen_width="1" color="aqua" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 356" />
+                    </plot>
+                    <plot index="44" pen_width="1" color="aqua" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 357" />
+                    </plot>
+                    <plot index="45" pen_width="1" color="#F586FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 357" />
+                    </plot>
+                    <plot index="46" pen_width="1" color="#F586FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 358" />
+                    </plot>
+                    <plot index="47" pen_width="1" color="black" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 358" />
+                    </plot>
+                    <plot index="48" pen_width="1" color="black" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 359" />
+                    </plot>
+                    <plot index="49" pen_width="1" color="#C8C8C8" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 359" />
+                    </plot>
+                    <plot index="50" pen_width="1" color="#C8C8C8" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 360" />
+                    </plot>
+                    <plot index="51" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 360" />
+                    </plot>
+                    <plot index="52" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 361" />
+                    </plot>
+                    <plot index="53" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 361" />
+                    </plot>
+                    <plot index="54" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 362" />
+                    </plot>
+                    <plot index="55" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 362" />
+                    </plot>
+                    <plot index="56" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 363" />
+                    </plot>
+                    <plot index="57" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 363" />
+                    </plot>
+                    <plot index="58" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 364" />
+                    </plot>
+                    <plot index="59" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 364" />
+                    </plot>
+                    <plot index="60" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 365" />
+                    </plot>
+                    <plot index="61" pen_width="1" color="#7F00FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 365" />
+                    </plot>
+                    <plot index="62" pen_width="1" color="#7F00FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 366" />
+                    </plot>
+                    <plot index="63" pen_width="1" color="#0CA0FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 366" />
+                    </plot>
+                    <plot index="64" pen_width="1" color="#0CA0FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 367" />
+                    </plot>
+                    <plot index="65" pen_width="1" color="lime" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 367" />
+                    </plot>
+                    <plot index="66" pen_width="1" color="lime" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 368" />
+                    </plot>
+                    <plot index="67" pen_width="1" color="#FF007F" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 368" />
+                    </plot>
+                    <plot index="68" pen_width="1" color="#FF007F" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 369" />
+                    </plot>
+                    <plot index="69" pen_width="1" color="aqua" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 369" />
+                    </plot>
+                    <plot index="70" pen_width="1" color="aqua" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 370" />
+                    </plot>
+                    <plot index="71" pen_width="1" color="#F586FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 370" />
+                    </plot>
+                    <plot index="72" pen_width="1" color="#F586FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 371" />
+                    </plot>
+                    <plot index="73" pen_width="1" color="black" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 371" />
+                    </plot>
+                    <plot index="74" pen_width="1" color="black" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 372" />
+                    </plot>
+                    <plot index="75" pen_width="1" color="#C8C8C8" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 372" />
+                    </plot>
+                    <plot index="76" pen_width="1" color="#C8C8C8" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 373" />
+                    </plot>
+                    <plot index="77" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 373" />
+                    </plot>
+                    <plot index="78" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 374" />
+                    </plot>
+                    <plot index="79" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 374" />
+                    </plot>
+                    <plot index="80" pen_width="1" color="red" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 375" />
+                    </plot>
+                    <plot index="81" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 375" />
+                    </plot>
+                    <plot index="82" pen_width="1" color="fuchsia" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 376" />
+                    </plot>
+                    <plot index="83" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 376" />
+                    </plot>
+                    <plot index="84" pen_width="1" color="#008F44" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 377" />
+                    </plot>
+                    <plot index="85" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 377" />
+                    </plot>
+                    <plot index="86" pen_width="1" color="#FF7F00" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 378" />
+                    </plot>
+                    <plot index="87" pen_width="1" color="#7F00FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 378" />
+                    </plot>
+                    <plot index="88" pen_width="1" color="#7F00FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 379" />
+                    </plot>
+                    <plot index="89" pen_width="1" color="#0CA0FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 379" />
+                    </plot>
+                    <plot index="90" pen_width="1" color="#0CA0FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 380" />
+                    </plot>
+                    <plot index="91" pen_width="1" color="lime" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 380" />
+                    </plot>
+                    <plot index="92" pen_width="1" color="lime" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 381" />
+                    </plot>
+                    <plot index="93" pen_width="1" color="#FF007F" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 381" />
+                    </plot>
+                    <plot index="94" pen_width="1" color="#FF007F" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 382" />
+                    </plot>
+                    <plot index="95" pen_width="1" color="aqua" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 382" />
+                    </plot>
+                    <plot index="96" pen_width="1" color="aqua" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 383" />
+                    </plot>
+                    <plot index="97" pen_width="1" color="#F586FF" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 383" />
+                    </plot>
+                    <plot index="98" pen_width="1" color="#F586FF" precision="1" show_y_axis="true">
+                        <entity name="Altitude" />
+                        <data name="Run 384" />
+                    </plot>
+                    <plot index="99" pen_width="1" color="black" precision="1" show_y_axis="true">
+                        <scale min="0" max="150" />
+                        <entity name="Smooth_Oxy_Blood" />
+                        <data name="Run 384" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="135" y="1940" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 11" type="graph" icon_of="33" />
+            <stacked_container x="188" y="1922" height="282" width="492" uid="34">
+                <graph type="time_series" title="Untitled" background="#FFFFC9" show_grid="true" plot_numbers="true" isee:use_five_segments="false" date_time="2016-11-30T12:08:44Z" time_precision="2" from="1" to="1000">
+                    <plot index="0" pen_width="1" color="blue" precision="1" show_y_axis="true">
+                        <entity name="Oxygenated_Blood" />
+                    </plot>
+                </graph>
+            </stacked_container>
+            <pad_icon x="210" y="1938" width="26" height="22" color="#008F44" label_side="bottom" label="Graph 12" type="graph" icon_of="34" />
+            <stacked_container x="831" y="1861" height="270" width="475" uid="35">
+                <table font-size="9" background="#E0E0E0" comparative="true" column_width="59" orientation="horizontal" interval="DT" date_time="2016-11-30T12:08:44Z">
+                    <title>Untitled Table</title>
+                    <item type="time" color="black" precision="max" width="100" />
+                    <item color="black" precision="0.01" delimit_000s="true" index="0">
+                        <entity name="Altitude" />
+                        <data name="Run 365" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="1">
+                        <entity name="Altitude" />
+                        <data name="Run 366" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="2">
+                        <entity name="Altitude" />
+                        <data name="Run 367" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="3">
+                        <entity name="Altitude" />
+                        <data name="Run 368" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="4">
+                        <entity name="Altitude" />
+                        <data name="Run 369" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="5">
+                        <entity name="Altitude" />
+                        <data name="Run 370" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="6">
+                        <entity name="Altitude" />
+                        <data name="Run 371" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="7">
+                        <entity name="Altitude" />
+                        <data name="Run 372" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="8">
+                        <entity name="Altitude" />
+                        <data name="Run 373" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="9">
+                        <entity name="Altitude" />
+                        <data name="Run 374" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="10">
+                        <entity name="Altitude" />
+                        <data name="Run 375" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="11">
+                        <entity name="Altitude" />
+                        <data name="Run 376" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="12">
+                        <entity name="Altitude" />
+                        <data name="Run 377" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="13">
+                        <entity name="Altitude" />
+                        <data name="Run 378" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="14">
+                        <entity name="Altitude" />
+                        <data name="Run 379" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="15">
+                        <entity name="Altitude" />
+                        <data name="Run 380" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="16">
+                        <entity name="Altitude" />
+                        <data name="Run 381" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="17">
+                        <entity name="Altitude" />
+                        <data name="Run 382" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="18">
+                        <entity name="Altitude" />
+                        <data name="Run 383" />
+                    </item>
+                    <item color="black" precision="0.01" delimit_000s="true" index="19">
+                        <entity name="Altitude" />
+                        <data name="Run 384" />
+                    </item>
+                </table>
+            </stacked_container>
+            <pad_icon x="853" y="1877" width="26" height="22" color="#008F44" label_side="bottom" label="Table 1" type="table" icon_of="35" />
             <style font-family="Arial" font-size="9" />
         </display>
         <interface page_width="788" page_height="528">
             <simulation_delay>0</simulation_delay>
             <style font-family="Arial" font-size="9" />
         </interface>
-        <popup x="280" y="441" content="31" />
-        <popup x="282" y="389" content="32" />
+        <popup x="280" y="441" content="26" />
+        <popup x="282" y="389" content="27" />
+        <popup x="277" y="451" content="33" />
         <style font-family="Arial" font-size="9" />
     </model>
 </xmile>
